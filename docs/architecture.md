@@ -52,7 +52,7 @@ MemRelay 让开发者在多个 AI coding agent 之间接力同一个任务。比
 ### 3.1 安装与接入
 
 ```bash
-npm i -g memrelay   # 电脑上需要装有 Node 22.15 或更高版本；也可以用 pnpm、yarn、bun 全局安装
+npm i -g memrelay   # 电脑上需要装有 Node 22.16 或更高版本；也可以用 pnpm、yarn、bun 全局安装
 memrelay setup      # 检测已安装的工具 → 列出要写入的文件 → 用户确认一次 → 写入 → 在各终端自测
 ```
 
@@ -133,7 +133,7 @@ npm uninstall -g memrelay
 **入口程序 `bin/memrelay.cjs`**
 
 - 用老语法写（CommonJS，不用新 API），Node 14 以上都能运行。
-- 先检查当前 Node 版本。低于 22.15 时，按以下顺序寻找可用的 Node：
+- 先检查当前 Node 版本。低于 22.16 时，按以下顺序寻找可用的 Node：
   1. `~/.memrelay/runtime.json` 里记录的路径
   2. PATH
   3. 常见版本管理器的目录：nvm、nvm-windows、volta、fnm、asdf、mise、Homebrew
@@ -477,7 +477,7 @@ interface Message {
 | 维度 | 覆盖范围 | 做法 |
 |---|---|---|
 | 操作系统 | Windows 10 及以上、macOS、Linux | 路径按系统区分；Windows 上比较路径时不区分大小写 |
-| Node 版本 | 运行需要 22.15 及以上；电脑上同时装着低版本也行 | 入口程序会自动找到可用的版本 |
+| Node 版本 | 运行需要 22.16 及以上；电脑上同时装着低版本也行 | 入口程序会自动找到可用的版本 |
 | Node 安装方式 | 官方安装包、nvm、nvm-windows、volta、fnm、asdf、mise、Homebrew、系统包管理器 | 启动脚本同时记录真实路径和原始路径，前者失效时回退到后者 |
 | 全局安装方式 | npm、pnpm、yarn、bun | setup 记录实际的入口路径；不接受 npx 临时目录 |
 | 终端 | PowerShell 5.1、pwsh、cmd、Git Bash、bash、zsh | Skill 按终端分别给出命令；不生成 `.ps1` |
@@ -533,7 +533,7 @@ memrelay/                            仓库是 pnpm workspace；发布物只有 
 | 数据库 | `node:sqlite` |
 | 测试 | Vitest |
 | CI 与发布 | GitHub Actions：三个平台跑测试；打 tag 后发布到 npm，附带 provenance |
-| `package.json` | `packages/cli` 的 `engines.node` 为 `>=22.15`；`bin.memrelay` 指向 `bin/memrelay.cjs`；`files` 包含 `bin`、`dist`、`dsh-plugin` |
+| `package.json` | `packages/cli` 的 `engines.node` 为 `>=22.16`；`bin.memrelay` 指向 `bin/memrelay.cjs`；`files` 包含 `bin`、`dist`、`dsh-plugin` |
 
 ## 10. 测试策略
 
@@ -550,7 +550,7 @@ memrelay/                            仓库是 pnpm workspace；发布物只有 
 - **端到端**：用临时目录伪造 `HOME`、`USERPROFILE`、`MEMRELAY_HOME`，放进样例，然后调用打包后的命令。
 - **环境矩阵**（GitHub Actions），覆盖以下维度：
   - 系统：Windows、macOS、Linux
-  - Node：22.15、22 最新版、24；另外测"当前生效的是 Node 18、电脑上另有 24"时，入口程序能不能自动切换
+  - Node：22.16、22 最新版、24；另外测"当前生效的是 Node 18、电脑上另有 24"时，入口程序能不能自动切换
   - 安装方式：官方安装包、nvm 或 nvm-windows、volta、fnm、pnpm 全局安装
   - 终端：PowerShell 5.1、pwsh、cmd、Git Bash、bash、zsh
   - 主目录：带空格、带中文
@@ -659,7 +659,7 @@ Cursor 会自动导入 `~/.claude/settings.json` 的 hooks（第三方兼容，�
 | Cursor 从多个目录读取 Skill，可能显示两份同名 Skill | 两份内容相同；如果有问题，改为只写一个目录 | 迭代 1 |
 | PowerShell 5.1 + GBK 下中文乱码 | 首行中文标记，加上 `--out` | 迭代 1 |
 | 在沙箱里以只读方式打开 WAL 模式的 SQLite | 实测；如果不行，`resume` 只读 `filters.json`，不碰数据库 | 迭代 2 |
-| Codex 的 `.jsonl.zst` 需要 zstd 解压（Node 22.15 起自带，待确认） | 在较低版本上跳过这类文件并给出提示 | 迭代 2 |
+| Codex 的 `.jsonl.zst` 需要 zstd 解压（Node 22.16 起自带，待确认） | 在较低版本上跳过这类文件并给出提示 | 迭代 2 |
 | Codex 的 hooks 在 Windows 上能否使用；Cursor 开局注入的已知 bug；Trae 的 hooks 在 SOLO 模式下是否生效 | 实测后决定这些工具能否用 b 层。结论：Codex 已接入（Windows 经 PowerShell，`commandWindows` 字段给 Windows 专用命令；未信任的 hook 不跑，setup 预置 `hooks.state.trusted_hash` 后无需手动放行）；Cursor 会自动导入 `~/.claude/settings.json` 的 hooks，不另装；Trae 官方文档确认 hooks 适用于所有模式（含 SOLO/对话），但要求 `version: 1` 且在 设置 > Hooks 里启用——此前只做了手工模拟，真实 UI 触发待启用后复测 | 迭代 2 → 迭代 5 已定 |
 | Cursor 的记录缺少工具输出，IDE 和命令行分开存储 | 适配器分别处理；缺失的部分在续接内容里注明 | 迭代 4 |
 | Claude Code 默认约 30 天后清理旧会话 | 及时归档到 `memrelay.db` | 迭代 2 |

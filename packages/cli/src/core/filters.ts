@@ -4,6 +4,7 @@ import type { DatabaseSync } from "node:sqlite";
 
 import type { SessionStatus } from "./types.js";
 import { memrelayDir, type currentEnv } from "./env.js";
+import { normalizePathForCompare } from "./path-utils.js";
 
 export interface Filters {
   /** 排除的目录（前缀匹配，规范化后比较） */
@@ -146,7 +147,5 @@ export function manualStatusFor(
 }
 
 function normalize(p: string, platform: NodeJS.Platform): string {
-  let out = path.resolve(p).replace(/[\\/]+/g, "/").replace(/\/+$/, "");
-  if (platform === "win32") out = out.toLowerCase();
-  return out;
+  return normalizePathForCompare(p, platform);
 }

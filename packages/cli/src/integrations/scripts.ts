@@ -31,7 +31,7 @@ function envifyWindowsPath(p: string, input: StartupScriptInput): string {
 }
 
 /**
- * 启动脚本里的 Node 版本闸门：低于 engines 要求（>=22.15）的候选直接跳过。
+ * 启动脚本里的 Node 版本闸门：低于 engines 要求（>=22.16）的候选直接跳过。
  * nvm 等版本管理器切换后，"当前版本"路径会指向别的 Node（可能过旧，
  * 缺 node:sqlite 会让 CLI 一启动就崩）——只按"文件存在"选会静默把 hook 跑挂。
  */

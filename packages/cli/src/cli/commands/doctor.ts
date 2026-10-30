@@ -37,7 +37,7 @@ async function doctor(): Promise<number> {
   const nodeVersion = process.version;
   const [major = 0, minor = 0] = nodeVersion.replace(/^v/, "").split(".").map(Number);
   const nodeOk = major > 22 || (major === 22 && minor >= 15);
-  out(`  ${nodeOk ? "✓" : "✗"} Node ${nodeVersion}${nodeOk ? "" : "（需要 22.15 或更高）"}`);
+  out(`  ${nodeOk ? "✓" : "✗"} Node ${nodeVersion}${nodeOk ? "" : "（需要 22.16 或更高）"}`);
   if (!nodeOk) problems.push("Node 版本过低");
 
   const binDir = path.join(memrelayDir(env), "bin");

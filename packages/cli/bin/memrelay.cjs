@@ -2,7 +2,7 @@
 /*
  * MemRelay bootstrap entry.
  * Written in old CommonJS syntax on purpose: it must load and run on any
- * Node that can parse it (>= 14), even though the real CLI needs >= 22.15.
+ * Node that can parse it (>= 14), even though the real CLI needs >= 22.16.
  * Its only job: find a suitable Node, re-launch the bundled CLI with it.
  */
 "use strict";
@@ -14,7 +14,7 @@ var url = require("url");
 var childProcess = require("child_process");
 
 var MIN_MAJOR = 22;
-var MIN_MINOR = 15;
+var MIN_MINOR = 16;
 var EXIT_ENV = 2;
 
 function parseVersion(str) {
@@ -214,7 +214,7 @@ function failNoNode(reason) {
     "MemRelay: no suitable Node.js runtime found.",
     "MemRelay needs Node.js >= " + MIN_MAJOR + "." + MIN_MINOR + " (found: " + reason + ").",
     "",
-    "Install Node.js >= 22.15 (https://nodejs.org or nvm), then run: memrelay doctor",
+    "Install Node.js >= 22.16 (https://nodejs.org or nvm), then run: memrelay doctor",
     "",
   ].join("\n");
   process.stderr.write(msg + "\n");

@@ -23,7 +23,7 @@
 
 <p align="center">
   <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="License: MIT"></a>
-  <img src="https://img.shields.io/badge/Node-%E2%89%A5%2022.15-339933?logo=nodedotjs&logoColor=white" alt="Node >= 22.15">
+  <img src="https://img.shields.io/badge/Node-%E2%89%A5%2022.16-339933?logo=nodedotjs&logoColor=white" alt="Node >= 22.16">
   <img src="https://img.shields.io/badge/platform-macOS%20%7C%20Linux%20%7C%20Windows-blue" alt="macOS | Linux | Windows">
 </p>
 
@@ -57,7 +57,7 @@ MemRelay membaca catatan sesi yang disimpan setiap alat di komputer Anda dan, sa
 
 ## Instalasi
 
-Memerlukan Node.js ≥ 22.15 (nvm / fnm / volta / mise semuanya bisa — launcher mencari Node yang sesuai sendiri):
+Memerlukan Node.js ≥ 22.16 (nvm / fnm / volta / mise semuanya bisa — launcher mencari Node yang sesuai sendiri):
 
 ```bash
 npm i -g memrelay    # instalasi global dengan pnpm / yarn / bun juga bisa

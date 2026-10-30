@@ -548,7 +548,7 @@ export async function runSetupCommand(opts: SetupOptions): Promise<number> {
     localAppData: env.env["LOCALAPPDATA"],
   };
   written.push(writeFileTracked(path.join(binDir, "memrelay"), renderSh(scriptInput), "launcher"));
-  if (process.platform === "win32") {
+  if (process.platform !== "win32") {
     try {
       fs.chmodSync(path.join(binDir, "memrelay"), 0o755);
     } catch {

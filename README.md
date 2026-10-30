@@ -22,7 +22,7 @@
 
 <p align="center">
   <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="License: MIT"></a>
-  <img src="https://img.shields.io/badge/Node-%E2%89%A5%2022.15-339933?logo=nodedotjs&logoColor=white" alt="Node >= 22.15">
+  <img src="https://img.shields.io/badge/Node-%E2%89%A5%2022.16-339933?logo=nodedotjs&logoColor=white" alt="Node >= 22.16">
   <img src="https://img.shields.io/badge/platform-macOS%20%7C%20Linux%20%7C%20Windows-blue" alt="macOS | Linux | Windows">
 </p>
 
@@ -56,7 +56,7 @@ MemRelay 直接读各工具留在本机的会话记录，在你说"继续"时现
 
 ## 安装
 
-需要 Node.js ≥ 22.15（nvm / fnm / volta / mise 等版本管理器都行，入口程序会自己找可用的 Node）：
+需要 Node.js ≥ 22.16（nvm / fnm / volta / mise 等版本管理器都行，入口程序会自己找可用的 Node）：
 
 ```bash
 npm i -g memrelay    # pnpm / yarn / bun 全局安装同样可用

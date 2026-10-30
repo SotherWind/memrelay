@@ -23,7 +23,7 @@
 
 <p align="center">
   <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="License: MIT"></a>
-  <img src="https://img.shields.io/badge/Node-%E2%89%A5%2022.15-339933?logo=nodedotjs&logoColor=white" alt="Node >= 22.15">
+  <img src="https://img.shields.io/badge/Node-%E2%89%A5%2022.16-339933?logo=nodedotjs&logoColor=white" alt="Node >= 22.16">
   <img src="https://img.shields.io/badge/platform-macOS%20%7C%20Linux%20%7C%20Windows-blue" alt="macOS | Linux | Windows">
 </p>
 
@@ -57,7 +57,7 @@ MemRelay lee los registros de sesión que cada herramienta guarda en tu máquina
 
 ## Instalación
 
-Requiere Node.js ≥ 22.15 (nvm / fnm / volta / mise funcionan; el lanzador busca un Node válido por su cuenta):
+Requiere Node.js ≥ 22.16 (nvm / fnm / volta / mise funcionan; el lanzador busca un Node válido por su cuenta):
 
 ```bash
 npm i -g memrelay    # la instalación global con pnpm / yarn / bun también funciona

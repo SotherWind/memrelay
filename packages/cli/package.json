@@ -17,7 +17,7 @@
     "dsh-plugin"
   ],
   "engines": {
-    "node": ">=22.15"
+    "node": ">=22.16"
   },
   "scripts": {
     "build": "tsdown",

@@ -22,18 +22,43 @@ export const ADAPTER_VERSION = 1;
 const zstdDecompress: ((buf: Buffer) => Buffer) | undefined = (
   zlib as unknown as { zstdDecompressSync?: (buf: Buffer) => Buffer }
 ).zstdDecompressSync?.bind(zlib);
+const zstdCompress: ((buf: Buffer) => Buffer) | undefined = (
+  zlib as unknown as { zstdCompressSync?: (buf: Buffer) => Buffer }
+).zstdCompressSync?.bind(zlib);
 
 export function hasZstd(): boolean {
   return zstdDecompress !== undefined;
 }
 
+let decodesAllFrames: boolean | undefined;
+
+/** Node 24.22 起 zstdDecompressSync 会一次解出所有拼接帧，更早的版本只解第一帧。 */
+function zstdDecodesAllFrames(): boolean {
+  if (decodesAllFrames !== undefined) return decodesAllFrames;
+  try {
+    if (!zstdDecompress || !zstdCompress) return (decodesAllFrames = false);
+    const frames = Buffer.concat([zstdCompress(Buffer.from("a")), zstdCompress(Buffer.from("b"))]);
+    decodesAllFrames = decodeBuffer(zstdDecompress(frames)) === "ab";
+  } catch {
+    decodesAllFrames = false;
+  }
+  return decodesAllFrames;
+}
+
 /**
- * dsh 的会话文件是多帧 zstd 追加写入（每批事件一个独立帧），
- * zstdDecompressSync 只解第一帧，所以要逐帧扫魔数解压再拼接。
+ * dsh 的会话文件是多帧 zstd 追加写入（每批事件一个独立帧）。
+ * 旧版 Node 只解第一帧，需要逐帧扫魔数解压再拼接；新版整段解压即可。
  */
 function decodeZstdFrames(buf: Buffer): string {
   if (!zstdDecompress) {
-    throw new Error("Node 版本不支持 zstd 解压（需要 22.15+ 或 24+）");
+    throw new Error("Node 版本不支持 zstd 解压（需要 22.16+ 或 24+）");
+  }
+  if (zstdDecodesAllFrames()) {
+    try {
+      return decodeBuffer(zstdDecompress(buf));
+    } catch {
+      /* 末帧撕裂时退回逐帧 */
+    }
   }
   const chunks: string[] = [];
   for (let i = 0; i + 3 < buf.length; i++) {

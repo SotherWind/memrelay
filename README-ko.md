@@ -22,7 +22,7 @@
 
 <p align="center">
   <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="License: MIT"></a>
-  <img src="https://img.shields.io/badge/Node-%E2%89%A5%2022.15-339933?logo=nodedotjs&logoColor=white" alt="Node >= 22.15">
+  <img src="https://img.shields.io/badge/Node-%E2%89%A5%2022.16-339933?logo=nodedotjs&logoColor=white" alt="Node >= 22.16">
   <img src="https://img.shields.io/badge/platform-macOS%20%7C%20Linux%20%7C%20Windows-blue" alt="macOS | Linux | Windows">
 </p>
 
@@ -56,7 +56,7 @@ MemRelay는 각 도구가 로컬에 남긴 세션 기록을 직접 읽고, 당�
 
 ## 설치
 
-Node.js ≥ 22.15 필요 (nvm / fnm / volta / mise 모두 가능——런처가 사용 가능한 Node를 스스로 찾습니다):
+Node.js ≥ 22.16 필요 (nvm / fnm / volta / mise 모두 가능——런처가 사용 가능한 Node를 스스로 찾습니다):
 
 ```bash
 npm i -g memrelay    # pnpm / yarn / bun 전역 설치도 동일하게 사용 가능

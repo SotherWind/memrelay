@@ -2,6 +2,8 @@ import { execFileSync } from "node:child_process";
 import fs from "node:fs";
 import path from "node:path";
 
+import { resolvePathOnAnyPlatform } from "./path-utils.js";
+
 export interface ProjectIdentity {
   projectRoot: string;
   isGitRepo: boolean;
@@ -30,7 +32,7 @@ export function findProjectRoot(cwd: string): string {
 
 /** 解析符号链接与 Windows 8.3 短名，保证各处生成的路径写法一致。 */
 function canonicalize(p: string): string {
-  const resolved = path.resolve(p);
+  const resolved = resolvePathOnAnyPlatform(p);
   try {
     return fs.realpathSync.native(resolved);
   } catch {

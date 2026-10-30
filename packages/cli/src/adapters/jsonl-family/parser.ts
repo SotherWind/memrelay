@@ -1,6 +1,7 @@
 import path from "node:path";
 
 import type { NormalizedEvent, Part } from "../../core/types.js";
+import { normalizePathForCompare } from "../../core/path-utils.js";
 import { partKindForTool, categorizeTool, extractFilePaths, isPlanTool } from "../../core/tool-names.js";
 import { readFileHead, readFileTail } from "./jsonl.js";
 import {
@@ -541,11 +542,7 @@ export const projectSlugVariants = (projectPath: string): string[] => {
   return [...new Set([upper, slug.toLowerCase(), collapsed.toLowerCase()])];
 };
 
-export function normalizePathForCompare(p: string, platform: NodeJS.Platform): string {
-  let out = path.resolve(p).replace(/[\\/]+/g, "/").replace(/\/+$/, "");
-  if (platform === "win32") out = out.toLowerCase();
-  return out;
-}
+export { normalizePathForCompare };
 
 export function isPathInside(child: string, parent: string, platform: NodeJS.Platform): boolean {
   const c = normalizePathForCompare(child, platform);

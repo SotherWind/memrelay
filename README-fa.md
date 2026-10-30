@@ -23,7 +23,7 @@
 
 <p align="center">
   <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="License: MIT"></a>
-  <img src="https://img.shields.io/badge/Node-%E2%89%A5%2022.15-339933?logo=nodedotjs&logoColor=white" alt="Node >= 22.15">
+  <img src="https://img.shields.io/badge/Node-%E2%89%A5%2022.16-339933?logo=nodedotjs&logoColor=white" alt="Node >= 22.16">
   <img src="https://img.shields.io/badge/platform-macOS%20%7C%20Linux%20%7C%20Windows-blue" alt="macOS | Linux | Windows">
 </p>
 
@@ -57,7 +57,7 @@ MemRelay سوابق جلسه‌ای را که هر ابزار روی رایان�
 
 ## نصب
 
-به Node.js ≥ 22.15 نیاز دارد (nvm / fnm / volta / mise همه کار می‌کنند — لانچر خودش Node مناسب را پیدا می‌کند):
+به Node.js ≥ 22.16 نیاز دارد (nvm / fnm / volta / mise همه کار می‌کنند — لانچر خودش Node مناسب را پیدا می‌کند):
 
 ```bash
 npm i -g memrelay    # نصب سراسری با pnpm / yarn / bun هم کار می‌کند

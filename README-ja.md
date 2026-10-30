@@ -22,7 +22,7 @@
 
 <p align="center">
   <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="License: MIT"></a>
-  <img src="https://img.shields.io/badge/Node-%E2%89%A5%2022.15-339933?logo=nodedotjs&logoColor=white" alt="Node >= 22.15">
+  <img src="https://img.shields.io/badge/Node-%E2%89%A5%2022.16-339933?logo=nodedotjs&logoColor=white" alt="Node >= 22.16">
   <img src="https://img.shields.io/badge/platform-macOS%20%7C%20Linux%20%7C%20Windows-blue" alt="macOS | Linux | Windows">
 </p>
 
@@ -56,7 +56,7 @@ MemRelay は各ツールがローカルに残したセッション記録を直�
 
 ## インストール
 
-Node.js ≥ 22.15 が必要です（nvm / fnm / volta / mise など可。ランチャーが利用可能な Node を自分で探します）：
+Node.js ≥ 22.16 が必要です（nvm / fnm / volta / mise など可。ランチャーが利用可能な Node を自分で探します）：
 
 ```bash
 npm i -g memrelay    # pnpm / yarn / bun でのグローバルインストールも可
