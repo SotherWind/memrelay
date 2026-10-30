@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>MemRelay · 整理页面规范</title>
+<link rel="stylesheet" href="./spec.css">
+</head>
+<body>
+<section class="board" id="board">
+  <header class="board-head">
+    <div>
+      <div class="eyebrow">MemRelay · Page Spec</div>
+      <h1>整理</h1>
+      <div class="subtitle">页面规范 · 简洁风 · Light / Dark</div>
+    </div>
+    <div class="head-meta">
+      <span class="tag">PAGE SPEC</span>
+      <span>06 / TIDY</span>
+      <span>2026-10-30</span>
+    </div>
+  </header>
+
+  <div class="content">
+    <div class="previews">
+      <div class="preview">
+        <div class="preview-label"><span class="dot"></span>LIGHT · 浅色<span class="shot-meta">1440 × 1000</span></div>
+        <div class="preview-frame"><img src="./previews/tidy-light.png" alt="整理浅色页面"></div>
+      </div>
+      <div class="preview dark">
+        <div class="preview-label"><span class="dot"></span>DARK · 深色<span class="shot-meta">1440 × 1000</span></div>
+        <div class="preview-frame"><img src="./previews/tidy-dark.png" alt="整理深色页面"></div>
+      </div>
+    </div>
+
+    <aside class="spec">
+      <div class="spec-kicker">06 / TIDY</div>
+      <h2>整理</h2>
+      <p class="spec-lead">把各工具里的全局偏好合并成一份，再写回每套工具的标记块。左栏是整理结果，右栏是运行状态与已下发文件。</p>
+
+      <div class="anatomy">
+        <div><b>01</b><em>页头</em><span>立即整理 / 撤销下发</span></div>
+        <div><b>02</b><em>来源</em><span>已读取的记忆与规则</span></div>
+        <div><b>03</b><em>结果</em><span>计划内容 / 状态</span></div>
+        <div><b>04</b><em>冲突</em><span>待拍板项（不写入）</span></div>
+        <div><b>05</b><em>运行状态</em><span>模型 / 时间 / 下发数</span></div>
+        <div><b>06</b><em>已下发</em><span>按工具列出文件</span></div>
+      </div>
+
+      <dl class="spec-rows">
+        <div class="spec-row"><dt>左右栏</dt><dd><span class="mono">1fr / 396 px</span> · 间距 <span class="mono">14 px</span></dd></div>
+        <div class="spec-row"><dt>卡片</dt><dd>内边距 <span class="mono">18 / 20 px</span> · 圆角 <span class="mono">18 px</span></dd></div>
+        <div class="spec-row"><dt>区块图标</dt><dd><span class="mono">36 px</span> · 圆角 <span class="mono">11 px</span> · accent-soft</dd></div>
+        <div class="spec-row"><dt>来源行</dt><dd>高 <span class="mono">36 px</span> · 列 <span class="mono">96 / 1fr / auto</span></dd></div>
+        <div class="spec-row"><dt>来源行内边距</dt><dd><span class="mono">8 / 10 px</span> · 行间距 <span class="mono">8 px</span></dd></div>
+        <div class="spec-row"><dt>计划列表</dt><dd><span class="mono">12.5 px</span> · 行距 <span class="mono">6 px</span> · 缩进 <span class="mono">18 px</span></dd></div>
+        <div class="spec-row"><dt>冲突卡</dt><dd>琥珀底 · 内边距 <span class="mono">8 / 10 px</span> · 圆角 <span class="mono">8 px</span></dd></div>
+        <div class="spec-row"><dt>右栏卡片</dt><dd>内边距 <span class="mono">16 / 18 px</span> · KV 行 <span class="mono">11 px</span></dd></div>
+        <div class="spec-row"><dt>状态胶囊</dt><dd>高 <span class="mono">22 px</span> · 字号 <span class="mono">11.5 px</span></dd></div>
+        <div class="spec-row"><dt>对齐</dt><dd>两栏底部对齐 · 右栏末卡补足高度</dd></div>
+        <div class="spec-row"><dt>轮询</dt><dd>每 <span class="mono">5 秒</span> 刷新运行状态</dd></div>
+        <div class="spec-row"><dt>窄屏</dt><dd>≤1080 px 单列 · 右栏落到下方</dd></div>
+      </dl>
+
+      <div class="token-head">COLOR TOKENS</div>
+      <div class="tokens">
+        <div class="token"><span class="pair"><i style="background:#FFFFFF"></i><i style="background:#1D1D23"></i></span><b>卡片</b><span>#FFFFFF / #1D1D23</span></div>
+        <div class="token"><span class="pair"><i style="background:#FAF8F4"></i><i style="background:#222229"></i></span><b>来源行</b><span>#FAF8F4 / #222229</span></div>
+        <div class="token"><span class="pair"><i style="background:#6F6A62"></i><i style="background:#ACA7A0"></i></span><b>计划文字</b><span>#6F6A62 / #ACA7A0</span></div>
+        <div class="token"><span class="pair"><i style="background:#FBF0DC"></i><i style="background:#37302C"></i></span><b>琥珀底</b><span>#FBF0DC / #37302C</span></div>
+        <div class="token"><span class="pair"><i style="background:#2E8B67"></i><i style="background:#64C49F"></i></span><b>成功</b><span>#2E8B67 / #64C49F</span></div>
+        <div class="token"><span class="pair"><i style="background:#EBE6DD"></i><i style="background:#2D2D36"></i></span><b>描边</b><span>#EBE6DD / #2D2D36</span></div>
+      </div>
+
+      <div class="note"><b>预览为演示数据。</b>尺寸与色值取自当前实现实测。<b>皮肤差异。</b>漫画 / 像素皮肤：来源行与冲突卡改描边或直角，计划列表的缩进与字号不变；右栏底部对齐规则三套皮肤一致。</div>
+
+      <div class="token-head" style="margin-top:20px">BEHAVIOR</div>
+      <ul class="behavior">
+        <li>立即整理后先出计划；冲突不自动写入，确认后重跑。</li>
+        <li>已下发的统一偏好与待拍板分成两张卡，避免把建议当成规则。</li>
+        <li>每 5 秒刷新状态；失败保留旧值。</li>
+      </ul>
+    </aside>
+  </div>
+
+  <footer class="board-foot">
+    <span>MEMRELAY DESIGN SYSTEM</span>
+    <span>PAGE · TIDY</span>
+    <span>06</span>
+  </footer>
+</section>
+</body>
+</html>

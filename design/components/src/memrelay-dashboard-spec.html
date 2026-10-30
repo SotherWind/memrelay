@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>MemRelay · 仪表盘页面规范</title>
+<link rel="stylesheet" href="./spec.css">
+</head>
+<body>
+<section class="board" id="board">
+  <header class="board-head">
+    <div>
+      <div class="eyebrow">MemRelay · Page Spec</div>
+      <h1>仪表盘</h1>
+      <div class="subtitle">页面规范 · 简洁风 · Light / Dark</div>
+    </div>
+    <div class="head-meta">
+      <span class="tag">PAGE SPEC</span>
+      <span>03 / DASHBOARD</span>
+      <span>2026-10-30</span>
+    </div>
+  </header>
+
+  <div class="content">
+    <div class="previews">
+      <div class="preview">
+        <div class="preview-label"><span class="dot"></span>LIGHT · 浅色<span class="shot-meta">1440 × 1000</span></div>
+        <div class="preview-frame"><img src="./previews/dashboard-light.png" alt="仪表盘浅色页面"></div>
+      </div>
+      <div class="preview dark">
+        <div class="preview-label"><span class="dot"></span>DARK · 深色<span class="shot-meta">1440 × 1000</span></div>
+        <div class="preview-frame"><img src="./previews/dashboard-dark.png" alt="仪表盘深色页面"></div>
+      </div>
+    </div>
+
+    <aside class="spec">
+      <div class="spec-kicker">03 / DASHBOARD</div>
+      <h2>仪表盘</h2>
+      <p class="spec-lead">首页先回答三件事：现在有多少任务、卡在哪一步、最近在用哪些工具。概览、活动图与四张分栏卡自上而下排布。</p>
+
+      <div class="anatomy">
+        <div><b>01</b><em>页头</em><span>标题 · 副标题 · 刷新</span></div>
+        <div><b>02</b><em>概览</em><span>六张状态卡（可点击）</span></div>
+        <div><b>03</b><em>活动</em><span>近 14 天会话柱</span></div>
+        <div><b>04</b><em>待接力</em><span>中断任务 / 全清空态</span></div>
+        <div><b>05</b><em>最近任务</em><span>列表 + 查看全部</span></div>
+        <div><b>06</b><em>分布</em><span>工具 / 活跃目录</span></div>
+      </div>
+
+      <dl class="spec-rows">
+        <div class="spec-row"><dt>侧栏 / 正文</dt><dd><span class="mono">300 px</span> 固定 · 内边距 <span class="mono">38 / 56 / 26 px</span></dd></div>
+        <div class="spec-row"><dt>内容宽度</dt><dd>最大 <span class="mono">1300 px</span> · 1440 视口实测 <span class="mono">1028 px</span></dd></div>
+        <div class="spec-row"><dt>页标题 / 副标题</dt><dd><span class="mono">40 px</span> / <span class="mono">750</span> · 行高 <span class="mono">40 px</span> / <span class="mono">14 px</span></dd></div>
+        <div class="spec-row"><dt>概览卡</dt><dd>3 列（≥1650 px 为 6 列）· 间距 <span class="mono">12 px</span></dd></div>
+        <div class="spec-row"><dt>概览卡尺寸</dt><dd>高 <span class="mono">76 px</span> · 内边距 <span class="mono">15 / 18 px</span> · 图标 <span class="mono">40 px</span></dd></div>
+        <div class="spec-row"><dt>活动图</dt><dd>卡片内高 <span class="mono">96 px</span> · 柱宽 ≤ <span class="mono">44 px</span> · 圆角 <span class="mono">3 px</span></dd></div>
+        <div class="spec-row"><dt>分栏网格</dt><dd><span class="mono">1.6 : 1</span> · 间距 <span class="mono">14 px</span> · 同行卡片等高</dd></div>
+        <div class="spec-row"><dt>任务行</dt><dd><span class="mono">1fr / 156 / 18 px</span> · 内边距 <span class="mono">12 / 20 px</span></dd></div>
+        <div class="spec-row"><dt>工具条</dt><dd>高 <span class="mono">6 px</span> · 强调色 78% · 轨道 surface-3</dd></div>
+        <div class="spec-row"><dt>空态</dt><dd>待接力全清空：<span class="mono">38 px</span> 圆标 + 一句说明</dd></div>
+        <div class="spec-row"><dt>刷新</dt><dd>每 <span class="mono">30 秒</span> 静默 · 页面隐藏时暂停</dd></div>
+        <div class="spec-row"><dt>窄屏</dt><dd>≤1080 px 单列 · ≤820 px 侧栏转顶栏</dd></div>
+      </dl>
+
+      <div class="token-head">COLOR TOKENS</div>
+      <div class="tokens">
+        <div class="token"><span class="pair"><i style="background:#F7F4EE"></i><i style="background:#121216"></i></span><b>页面底</b><span>#F7F4EE / #121216</span></div>
+        <div class="token"><span class="pair"><i style="background:#FFFFFF"></i><i style="background:#1D1D23"></i></span><b>概览卡</b><span>#FFFFFF / #1D1D23</span></div>
+        <div class="token"><span class="pair"><i style="background:#FCEFE9"></i><i style="background:#382728"></i></span><b>图标底</b><span>#FCEFE9 / #382728</span></div>
+        <div class="token"><span class="pair"><i style="background:#2E8B67"></i><i style="background:#64C49F"></i></span><b>进行中</b><span>#2E8B67 / #64C49F</span></div>
+        <div class="token"><span class="pair"><i style="background:#E15235"></i><i style="background:#F06A49"></i></span><b>活动柱</b><span>#E15235 / #F06A49</span></div>
+        <div class="token"><span class="pair"><i style="background:#948E84"></i><i style="background:#8B8792"></i></span><b>弱文字</b><span>#948E84 / #8B8792</span></div>
+      </div>
+
+      <div class="note"><b>预览为演示数据。</b>尺寸与色值取自当前实现实测。<b>皮肤差异。</b>漫画 / 像素皮肤只换渲染：卡片边框变为 2 px 墨线或描边，投影改为硬偏移；活动柱分别使用不规则圆角与直角。概览卡的列数不变。</div>
+
+      <div class="token-head" style="margin-top:20px">BEHAVIOR</div>
+      <ul class="behavior">
+        <li>六张状态卡都可点击：状态卡进入任务页对应筛选，已删除卡进入回收站。</li>
+        <li>活动柱悬浮或键盘聚焦时显示当天会话数。</li>
+        <li>每 30 秒静默刷新；页面隐藏时不发起请求。</li>
+      </ul>
+    </aside>
+  </div>
+
+  <footer class="board-foot">
+    <span>MEMRELAY DESIGN SYSTEM</span>
+    <span>PAGE · DASHBOARD</span>
+    <span>03</span>
+  </footer>
+</section>
+</body>
+</html>

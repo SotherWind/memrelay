@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>MemRelay · 会话页面规范</title>
+<link rel="stylesheet" href="./spec.css">
+</head>
+<body>
+<section class="board" id="board">
+  <header class="board-head">
+    <div>
+      <div class="eyebrow">MemRelay · Page Spec</div>
+      <h1>会话</h1>
+      <div class="subtitle">页面规范 · 简洁风 · Light / Dark</div>
+    </div>
+    <div class="head-meta">
+      <span class="tag">PAGE SPEC</span>
+      <span>05 / CONVERSATIONS</span>
+      <span>2026-10-30</span>
+    </div>
+  </header>
+
+  <div class="content">
+    <div class="previews">
+      <div class="preview">
+        <div class="preview-label"><span class="dot"></span>LIGHT · 浅色<span class="shot-meta">1440 × 1000</span></div>
+        <div class="preview-frame"><img src="./previews/conversations-light.png" alt="会话浅色页面"></div>
+      </div>
+      <div class="preview dark">
+        <div class="preview-label"><span class="dot"></span>DARK · 深色<span class="shot-meta">1440 × 1000</span></div>
+        <div class="preview-frame"><img src="./previews/conversations-dark.png" alt="会话深色页面"></div>
+      </div>
+    </div>
+
+    <aside class="spec">
+      <div class="spec-kicker">05 / CONVERSATIONS</div>
+      <h2>会话</h2>
+      <p class="spec-lead">以时间为轴浏览原始会话，支持全文搜索和来源筛选；Ctrl / Cmd + K 随时聚焦搜索框。</p>
+
+      <div class="anatomy">
+        <div><b>01</b><em>页头</em><span>标题 / 会话数 / 刷新</span></div>
+        <div><b>02</b><em>搜索 Hero</em><span>关键词 / 快捷键提示</span></div>
+        <div><b>03</b><em>来源筛选</em><span>全部来源 + 工具胶囊</span></div>
+        <div><b>04</b><em>时间分组</em><span>今天 / 昨天 / 更早</span></div>
+        <div><b>05</b><em>会话行</em><span>头像 / 标题 / 摘要 / 状态</span></div>
+        <div><b>06</b><em>命中</em><span>片段高亮 + 定位序号</span></div>
+      </div>
+
+      <dl class="spec-rows">
+        <div class="spec-row"><dt>侧栏 / 正文</dt><dd><span class="mono">300 px</span> 固定 · 内边距 <span class="mono">38 / 56 / 26 px</span></dd></div>
+        <div class="spec-row"><dt>搜索 Hero</dt><dd>高 <span class="mono">48 px</span> · 内边距 <span class="mono">0 / 16 px</span> · 圆角 <span class="mono">18 px</span></dd></div>
+        <div class="spec-row"><dt>快捷键</dt><dd>kbd 高 <span class="mono">21 px</span> · 字号 <span class="mono">10.5 px</span> · 圆角 <span class="mono">6 px</span></dd></div>
+        <div class="spec-row"><dt>来源胶囊</dt><dd>高 <span class="mono">34 px</span> · 间距 <span class="mono">6 px</span> · 数字 <span class="mono">12 px</span></dd></div>
+        <div class="spec-row"><dt>时间分组</dt><dd>标签 <span class="mono">12 / 600</span> · 上间距 <span class="mono">16 px</span></dd></div>
+        <div class="spec-row"><dt>会话行</dt><dd>高 <span class="mono">89 px</span> · 列 <span class="mono">34 / 1fr / 142 / 18 px</span></dd></div>
+        <div class="spec-row"><dt>行内边距</dt><dd><span class="mono">13 / 18 px</span> · 行间距 <span class="mono">14 px</span></dd></div>
+        <div class="spec-row"><dt>来源头像</dt><dd><span class="mono">34 px</span> · 圆角 <span class="mono">10 px</span> · 字母 <span class="mono">12 / 700</span></dd></div>
+        <div class="spec-row"><dt>文字层级</dt><dd>标题 <span class="mono">14 / 600</span> · 摘要 <span class="mono">12.5</span> · 元信息 <span class="mono">11.5</span></dd></div>
+        <div class="spec-row"><dt>命中标记</dt><dd>琥珀底 · 圆角 <span class="mono">2 px</span> · 字号不变</dd></div>
+        <div class="spec-row"><dt>轮询</dt><dd>每 <span class="mono">30 秒</span> 静默 · 搜索 <span class="mono">300 ms</span> 防抖</dd></div>
+        <div class="spec-row"><dt>窄屏</dt><dd>≤820 px 隐藏行尾箭头 · 来源列 <span class="mono">100 px</span></dd></div>
+      </dl>
+
+      <div class="token-head">COLOR TOKENS</div>
+      <div class="tokens">
+        <div class="token"><span class="pair"><i style="background:#FFFFFF"></i><i style="background:#1D1D23"></i></span><b>卡片</b><span>#FFFFFF / #1D1D23</span></div>
+        <div class="token"><span class="pair"><i style="background:#FCEFE9"></i><i style="background:#382728"></i></span><b>头像底</b><span>#FCEFE9 / #382728</span></div>
+        <div class="token"><span class="pair"><i style="background:#EDF3F7"></i><i style="background:#293039"></i></span><b>来源蓝</b><span>#EDF3F7 / #293039</span></div>
+        <div class="token"><span class="pair"><i style="background:#FBF0DC"></i><i style="background:#37302C"></i></span><b>命中琥珀</b><span>#FBF0DC / #37302C</span></div>
+        <div class="token"><span class="pair"><i style="background:#1C1A17"></i><i style="background:#F2EFE9"></i></span><b>主文字</b><span>#1C1A17 / #F2EFE9</span></div>
+        <div class="token"><span class="pair"><i style="background:#948E84"></i><i style="background:#8B8792"></i></span><b>弱文字</b><span>#948E84 / #8B8792</span></div>
+      </div>
+
+      <div class="note"><b>预览为演示数据。</b>尺寸与色值取自当前实现实测。<b>皮肤差异。</b>漫画 / 像素皮肤：来源头像加 2 px 描边，命中标记保持琥珀底但圆角随皮肤变化；像素皮肤头像改直角。</div>
+
+      <div class="token-head" style="margin-top:20px">BEHAVIOR</div>
+      <ul class="behavior">
+        <li>搜索命中片段高亮；点击行带着命中序号进入会话详情。</li>
+        <li>换搜索词自动回到「全部来源」，避免旧筛选把新结果清空。</li>
+        <li>Ctrl / Cmd + K 聚焦搜索框；每 30 秒静默刷新。</li>
+      </ul>
+    </aside>
+  </div>
+
+  <footer class="board-foot">
+    <span>MEMRELAY DESIGN SYSTEM</span>
+    <span>PAGE · CONVERSATIONS</span>
+    <span>05</span>
+  </footer>
+</section>
+</body>
+</html>

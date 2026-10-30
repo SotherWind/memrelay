@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>MemRelay · 任务页面规范</title>
+<link rel="stylesheet" href="./spec.css">
+</head>
+<body>
+<section class="board" id="board">
+  <header class="board-head">
+    <div>
+      <div class="eyebrow">MemRelay · Page Spec</div>
+      <h1>任务</h1>
+      <div class="subtitle">页面规范 · 简洁风 · Light / Dark</div>
+    </div>
+    <div class="head-meta">
+      <span class="tag">PAGE SPEC</span>
+      <span>04 / TASKS</span>
+      <span>2026-10-30</span>
+    </div>
+  </header>
+
+  <div class="content">
+    <div class="previews">
+      <div class="preview">
+        <div class="preview-label"><span class="dot"></span>LIGHT · 浅色<span class="shot-meta">1440 × 1000</span></div>
+        <div class="preview-frame"><img src="./previews/tasks-light.png" alt="任务浅色页面"></div>
+      </div>
+      <div class="preview dark">
+        <div class="preview-label"><span class="dot"></span>DARK · 深色<span class="shot-meta">1440 × 1000</span></div>
+        <div class="preview-frame"><img src="./previews/tasks-dark.png" alt="任务深色页面"></div>
+      </div>
+    </div>
+
+    <aside class="spec">
+      <div class="spec-kicker">04 / TASKS</div>
+      <h2>任务</h2>
+      <p class="spec-lead">按目录分组浏览任务；搜索与状态筛选走服务端，状态筛选写入 URL，可从仪表盘直接深链。</p>
+
+      <div class="anatomy">
+        <div><b>01</b><em>页头</em><span>标题 · 搜索 · 重新索引</span></div>
+        <div><b>02</b><em>筛选</em><span>状态胶囊 + 计数</span></div>
+        <div><b>03</b><em>目录</em><span>路径 / 计数 / 最近活动</span></div>
+        <div><b>04</b><em>任务行</em><span>标题 / 摘要 / 来源 / 状态</span></div>
+        <div><b>05</b><em>分组底部</em><span>查看全部 N 个任务</span></div>
+        <div><b>06</b><em>空态</em><span>无任务 / 无搜索结果</span></div>
+      </div>
+
+      <dl class="spec-rows">
+        <div class="spec-row"><dt>侧栏 / 正文</dt><dd><span class="mono">300 px</span> 固定 · 内边距 <span class="mono">38 / 56 / 26 px</span></dd></div>
+        <div class="spec-row"><dt>页头控件</dt><dd>搜索 / 按钮高 <span class="mono">40 px</span> · 输入 <span class="mono">12.5 px</span></dd></div>
+        <div class="spec-row"><dt>筛选胶囊</dt><dd>高 <span class="mono">34 px</span> · 字号 <span class="mono">14 px</span> · 数字 <span class="mono">12 px</span></dd></div>
+        <div class="spec-row"><dt>目录卡</dt><dd>间距 <span class="mono">14 px</span> · 圆角 <span class="mono">18 px</span> · 描边 <span class="mono">1 px</span></dd></div>
+        <div class="spec-row"><dt>目录头</dt><dd>高 <span class="mono">65 px</span> · 内边距 <span class="mono">13 / 20 px</span> · 图标 <span class="mono">32 px</span></dd></div>
+        <div class="spec-row"><dt>任务行</dt><dd>高 <span class="mono">92 px</span> · 列 <span class="mono">1fr / 146 / 18 px</span></dd></div>
+        <div class="spec-row"><dt>行内边距</dt><dd><span class="mono">12 / 20 px</span> · 行间距 <span class="mono">18 px</span></dd></div>
+        <div class="spec-row"><dt>文字层级</dt><dd>标题 <span class="mono">14 / 600</span> · 摘要 <span class="mono">12.5</span> · 元信息 <span class="mono">11.5</span></dd></div>
+        <div class="spec-row"><dt>分组底部</dt><dd>高 <span class="mono">40 px</span> · 强调色链接 · <span class="mono">12 / 600</span></dd></div>
+        <div class="spec-row"><dt>加载策略</dt><dd>每目录 <span class="mono">6 条 / 页</span> · 一次露出 <span class="mono">10 个</span>目录</dd></div>
+        <div class="spec-row"><dt>筛选深链</dt><dd>写入 URL：<span class="mono">?status=…</span> · 每 <span class="mono">30 秒</span>静默对表</dd></div>
+        <div class="spec-row"><dt>窄屏</dt><dd>≤820 px 隐藏行尾箭头 · 列宽收窄</dd></div>
+      </dl>
+
+      <div class="token-head">COLOR TOKENS</div>
+      <div class="tokens">
+        <div class="token"><span class="pair"><i style="background:#FFFFFF"></i><i style="background:#1D1D23"></i></span><b>卡片</b><span>#FFFFFF / #1D1D23</span></div>
+        <div class="token"><span class="pair"><i style="background:#FAF8F4"></i><i style="background:#222229"></i></span><b>目录头</b><span>#FAF8F4 / #222229</span></div>
+        <div class="token"><span class="pair"><i style="background:#EBE6DD"></i><i style="background:#2D2D36"></i></span><b>描边</b><span>#EBE6DD / #2D2D36</span></div>
+        <div class="token"><span class="pair"><i style="background:#1C1A17"></i><i style="background:#F2EFE9"></i></span><b>主文字</b><span>#1C1A17 / #F2EFE9</span></div>
+        <div class="token"><span class="pair"><i style="background:#E15235"></i><i style="background:#F06A49"></i></span><b>强调</b><span>#E15235 / #F06A49</span></div>
+        <div class="token"><span class="pair"><i style="background:#2E8B67"></i><i style="background:#64C49F"></i></span><b>进行中</b><span>#2E8B67 / #64C49F</span></div>
+      </div>
+
+      <div class="note"><b>预览为演示数据。</b>尺寸与色值取自当前实现实测。<b>皮肤差异。</b>漫画 / 像素皮肤：目录头分隔线加粗到 2 px，状态胶囊改描边；像素皮肤行分隔线保持 1 px，目录卡改直角。</div>
+
+      <div class="token-head" style="margin-top:20px">BEHAVIOR</div>
+      <ul class="behavior">
+        <li>搜索 250 ms 防抖；切换筛选或搜索时保留旧列表，直到新内容就绪。</li>
+        <li>点击任务行进入详情；放弃状态标题加删除线。</li>
+        <li>每 30 秒静默对表，失败时保留旧数据。</li>
+      </ul>
+    </aside>
+  </div>
+
+  <footer class="board-foot">
+    <span>MEMRELAY DESIGN SYSTEM</span>
+    <span>PAGE · TASKS</span>
+    <span>04</span>
+  </footer>
+</section>
+</body>
+</html>

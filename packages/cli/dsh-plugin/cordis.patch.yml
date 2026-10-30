@@ -1,0 +1,13 @@
+# MemRelay 的 DeepSeek Harness 接入（bundle patch）。
+#
+# 由 memrelay setup 安装（dsh plugin add <本机 memrelay 包内的 dsh-plugin 目录>），
+# 卸载：memrelay setup --undo，或 dsh plugin --profile desktop remove memrelay-dsh-plugin。
+#
+# 为什么走插件而不是 hooks 桥：dsh 的 hook 命令经沙箱通道执行，本机（Win10 + UAC 关 +
+# 桌面 GUI 宿主）受沙箱缺陷影响任何受限子进程都会 0xC0000142（官方未修），且受限令牌
+# 只能写工作区——写 ~/.memrelay 会被拒。插件代码在 harness 进程内执行（官方文档明示
+# "installed Host code executes in-process outside the workspace sandbox"），
+# 由它派生普通用户令牌的子进程来跑 memrelay，绕开整条受限通道。
+- insert:
+    - id: memrelay-dsh
+      name: 'memrelay-dsh-plugin'

@@ -1,0 +1,9 @@
+node_modules/
+dist/
+packages/ui/preview/
+packages/cli/README.md
+packages/cli/LICENSE
+*.log
+.DS_Store
+# 设计过程稿与截图（定稿在 design/）
+vibe_images/

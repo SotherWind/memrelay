@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>MemRelay · 配置页面规范</title>
+<link rel="stylesheet" href="./spec.css">
+</head>
+<body>
+<section class="board" id="board">
+  <header class="board-head">
+    <div>
+      <div class="eyebrow">MemRelay · Page Spec</div>
+      <h1>配置</h1>
+      <div class="subtitle">页面规范 · 简洁风 · Light / Dark</div>
+    </div>
+    <div class="head-meta">
+      <span class="tag">PAGE SPEC</span>
+      <span>10 / SETTINGS</span>
+      <span>2026-10-30</span>
+    </div>
+  </header>
+
+  <div class="content">
+    <div class="previews">
+      <div class="preview">
+        <div class="preview-label"><span class="dot"></span>LIGHT · 浅色<span class="shot-meta">1440 × 1000</span></div>
+        <div class="preview-frame"><img src="./previews/settings-light.png" alt="配置浅色页面"></div>
+      </div>
+      <div class="preview dark">
+        <div class="preview-label"><span class="dot"></span>DARK · 深色<span class="shot-meta">1440 × 1000</span></div>
+        <div class="preview-frame"><img src="./previews/settings-dark.png" alt="配置深色页面"></div>
+      </div>
+    </div>
+
+    <aside class="spec">
+      <div class="spec-kicker">10 / SETTINGS</div>
+      <h2>配置</h2>
+      <p class="spec-lead">会话摘要、偏好整理与语义检索各自独立配置；左栏填写接口与模型，右栏查看运行状态和队列，保存栏吸底。</p>
+
+      <div class="anatomy">
+        <div><b>01</b><em>页头</em><span>标题 / 已保存提示</span></div>
+        <div><b>02</b><em>摘要</em><span>开关 / 接口 / 队列</span></div>
+        <div><b>03</b><em>整理</em><span>开关 / 模型</span></div>
+        <div><b>04</b><em>检索</em><span>向量开关 / 回填 / 清除</span></div>
+        <div><b>05</b><em>自动接入</em><span>全局开关</span></div>
+        <div><b>06</b><em>右栏</em><span>运行状态 / 队列 / 数据说明</span></div>
+      </div>
+
+      <dl class="spec-rows">
+        <div class="spec-row"><dt>左右栏</dt><dd><span class="mono">1fr / 396 px</span> · 间距 <span class="mono">14 px</span></dd></div>
+        <div class="spec-row"><dt>卡片</dt><dd>内边距 <span class="mono">18 / 20 px</span> · 圆角 <span class="mono">18 px</span></dd></div>
+        <div class="spec-row"><dt>表单</dt><dd>2 列 · 间距 <span class="mono">11 / 12 px</span> · 上间距 <span class="mono">14 px</span></dd></div>
+        <div class="spec-row"><dt>字段</dt><dd>标签 <span class="mono">10.5 / 600</span> · 输入框 <span class="mono">36 px</span> · 圆角 <span class="mono">9 px</span></dd></div>
+        <div class="spec-row"><dt>开关</dt><dd><span class="mono">38 × 22 px</span> · 滑块 <span class="mono">16 px</span> · 选中 accent</dd></div>
+        <div class="spec-row"><dt>状态区</dt><dd>上间距 <span class="mono">13 px</span> · 分隔线 <span class="mono">1 px</span></dd></div>
+        <div class="spec-row"><dt>右栏</dt><dd>卡片 <span class="mono">16 / 18 px</span> · KV 行 <span class="mono">11 px</span></dd></div>
+        <div class="spec-row"><dt>保存栏</dt><dd>高 <span class="mono">56 px</span> · 吸底 · 按钮 <span class="mono">36 px</span></dd></div>
+        <div class="spec-row"><dt>队列进度</dt><dd>高 <span class="mono">5 px</span> · 绿色渐变</dd></div>
+        <div class="spec-row"><dt>密钥</dt><dd>显示「已设置」· 不回显明文 · 留空保持原值</dd></div>
+        <div class="spec-row"><dt>保存</dt><dd>有改动才允许保存 · 成功后 2 秒收起</dd></div>
+        <div class="spec-row"><dt>窄屏</dt><dd>≤1080 px 单列 · ≤820 px 页首补主题 / 语言入口</dd></div>
+      </dl>
+
+      <div class="token-head">COLOR TOKENS</div>
+      <div class="tokens">
+        <div class="token"><span class="pair"><i style="background:#FFFFFF"></i><i style="background:#1D1D23"></i></span><b>卡片</b><span>#FFFFFF / #1D1D23</span></div>
+        <div class="token"><span class="pair"><i style="background:#FAF8F4"></i><i style="background:#222229"></i></span><b>输入底</b><span>#FAF8F4 / #222229</span></div>
+        <div class="token"><span class="pair"><i style="background:#E15235"></i><i style="background:#F06A49"></i></span><b>开关</b><span>#E15235 / #F06A49</span></div>
+        <div class="token"><span class="pair"><i style="background:#2E8B67"></i><i style="background:#64C49F"></i></span><b>成功</b><span>#2E8B67 / #64C49F</span></div>
+        <div class="token"><span class="pair"><i style="background:#EBE6DD"></i><i style="background:#2D2D36"></i></span><b>描边</b><span>#EBE6DD / #2D2D36</span></div>
+        <div class="token"><span class="pair"><i style="background:#948E84"></i><i style="background:#8B8792"></i></span><b>弱文字</b><span>#948E84 / #8B8792</span></div>
+      </div>
+
+      <div class="note"><b>预览为演示数据。</b>尺寸与色值取自当前实现实测。<b>皮肤差异。</b>漫画 / 像素皮肤：输入框、开关和保存栏换边框与圆角；像素皮肤开关改直角。三套皮肤都不在配置页重复语言与主题（窄屏除外）。</div>
+
+      <div class="token-head" style="margin-top:20px">BEHAVIOR</div>
+      <ul class="behavior">
+        <li>三个功能各自填写 baseUrl / model / key，底部保存栏统一提交；API Key 不回显。</li>
+        <li>有改动才能保存；放弃更改恢复上次保存值。</li>
+        <li>摘要 / 向量队列每 5 秒刷新，错误在状态区展示。</li>
+      </ul>
+    </aside>
+  </div>
+
+  <footer class="board-foot">
+    <span>MEMRELAY DESIGN SYSTEM</span>
+    <span>PAGE · SETTINGS</span>
+    <span>10</span>
+  </footer>
+</section>
+</body>
+</html>

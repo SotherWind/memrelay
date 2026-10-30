@@ -1,0 +1,13 @@
+{
+  "name": "memrelay-workspace",
+  "private": true,
+  "packageManager": "pnpm@11.5.0",
+  "scripts": {
+    "dev": "pnpm --filter memrelay-ui run dev",
+    "build": "pnpm --filter memrelay run build && pnpm --filter memrelay-ui run build",
+    "test": "pnpm --filter memrelay run test",
+    "test:watch": "pnpm --filter memrelay run test:watch",
+    "typecheck": "pnpm --filter memrelay run typecheck && pnpm --filter memrelay-ui run typecheck",
+    "clean:modules": "node -e \"const fs=require('fs');const dirs=['node_modules',...fs.readdirSync('packages',{withFileTypes:true}).filter(d=>d.isDirectory()).map(d=>'packages/'+d.name+'/node_modules')];for(const d of dirs){fs.rmSync(d,{recursive:true,force:true,maxRetries:3,retryDelay:200});console.log('removed '+d);}\""
+  }
+}

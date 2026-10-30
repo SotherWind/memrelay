@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>MemRelay · 已删除页面规范</title>
+<link rel="stylesheet" href="./spec.css">
+</head>
+<body>
+<section class="board" id="board">
+  <header class="board-head">
+    <div>
+      <div class="eyebrow">MemRelay · Page Spec</div>
+      <h1>已删除</h1>
+      <div class="subtitle">页面规范 · 简洁风 · Light / Dark</div>
+    </div>
+    <div class="head-meta">
+      <span class="tag">PAGE SPEC</span>
+      <span>09 / TRASH</span>
+      <span>2026-10-30</span>
+    </div>
+  </header>
+
+  <div class="content">
+    <div class="previews">
+      <div class="preview">
+        <div class="preview-label"><span class="dot"></span>LIGHT · 浅色<span class="shot-meta">1440 × 1000</span></div>
+        <div class="preview-frame"><img src="./previews/trash-light.png" alt="已删除浅色页面"></div>
+      </div>
+      <div class="preview dark">
+        <div class="preview-label"><span class="dot"></span>DARK · 深色<span class="shot-meta">1440 × 1000</span></div>
+        <div class="preview-frame"><img src="./previews/trash-dark.png" alt="已删除深色页面"></div>
+      </div>
+    </div>
+
+    <aside class="spec">
+      <div class="spec-kicker">09 / TRASH</div>
+      <h2>已删除</h2>
+      <p class="spec-lead">只移除 MemRelay 索引，不碰原工具文件；按目录分组，支持单个恢复或整组恢复。</p>
+
+      <div class="anatomy">
+        <div><b>01</b><em>页头</em><span>搜索 / 全部恢复</span></div>
+        <div><b>02</b><em>提示</em><span>恢复不修改原文件</span></div>
+        <div><b>03</b><em>目录</em><span>路径 / 数量 / 最近活动</span></div>
+        <div><b>04</b><em>行</em><span>标题 / 来源 / 时间 / 消息数</span></div>
+        <div><b>05</b><em>操作</em><span>单个恢复 / 整组恢复</span></div>
+        <div><b>06</b><em>空态</em><span>无已删除 / 无匹配</span></div>
+      </div>
+
+      <dl class="spec-rows">
+        <div class="spec-row"><dt>侧栏 / 正文</dt><dd><span class="mono">300 px</span> 固定 · 内边距 <span class="mono">38 / 56 / 26 px</span></dd></div>
+        <div class="spec-row"><dt>页头控件</dt><dd>搜索 / 全部恢复高 <span class="mono">40 px</span></dd></div>
+        <div class="spec-row"><dt>提示条</dt><dd>高 <span class="mono">46 px</span> · 内边距 <span class="mono">10 / 16 px</span> · accent-soft</dd></div>
+        <div class="spec-row"><dt>目录卡</dt><dd>间距 <span class="mono">14 px</span> · 圆角 <span class="mono">18 px</span></dd></div>
+        <div class="spec-row"><dt>目录头</dt><dd>高 <span class="mono">65 px</span> · 内边距 <span class="mono">13 / 20 px</span> · 图标 <span class="mono">32 px</span></dd></div>
+        <div class="spec-row"><dt>恢复行</dt><dd>高 <span class="mono">68 px</span> · 列 <span class="mono">1fr / 128 / 86 px</span></dd></div>
+        <div class="spec-row"><dt>行内边距</dt><dd><span class="mono">13 / 20 px</span> · 行间距 <span class="mono">18 px</span></dd></div>
+        <div class="spec-row"><dt>小按钮</dt><dd>高 <span class="mono">32 px</span> · 字号 <span class="mono">12 / 600</span> · 圆角 <span class="mono">9 px</span></dd></div>
+        <div class="spec-row"><dt>不在索引</dt><dd>标题加删除线 · 元信息提示</dd></div>
+        <div class="spec-row"><dt>刷新</dt><dd>无自动轮询 · 操作后整体替换列表</dd></div>
+        <div class="spec-row"><dt>保留期</dt><dd>清理能力落地前不展示</dd></div>
+        <div class="spec-row"><dt>窄屏</dt><dd>≤820 px 侧栏转顶栏 · 行结构不变</dd></div>
+      </dl>
+
+      <div class="token-head">COLOR TOKENS</div>
+      <div class="tokens">
+        <div class="token"><span class="pair"><i style="background:#FCEFE9"></i><i style="background:#382728"></i></span><b>提示条</b><span>#FCEFE9 / #382728</span></div>
+        <div class="token"><span class="pair"><i style="background:#FFFFFF"></i><i style="background:#1D1D23"></i></span><b>卡片</b><span>#FFFFFF / #1D1D23</span></div>
+        <div class="token"><span class="pair"><i style="background:#EBE6DD"></i><i style="background:#2D2D36"></i></span><b>描边</b><span>#EBE6DD / #2D2D36</span></div>
+        <div class="token"><span class="pair"><i style="background:#1C1A17"></i><i style="background:#F2EFE9"></i></span><b>主文字</b><span>#1C1A17 / #F2EFE9</span></div>
+        <div class="token"><span class="pair"><i style="background:#6F6A62"></i><i style="background:#ACA7A0"></i></span><b>次文字</b><span>#6F6A62 / #ACA7A0</span></div>
+        <div class="token"><span class="pair"><i style="background:#948E84"></i><i style="background:#8B8792"></i></span><b>弱文字</b><span>#948E84 / #8B8792</span></div>
+      </div>
+
+      <div class="note"><b>预览为演示数据。</b>尺寸与色值取自当前实现实测。<b>皮肤差异。</b>漫画 / 像素皮肤：目录头图标与恢复按钮改描边，删除线保持文字原色；像素皮肤按钮改直角，危险操作仍走两步确认。</div>
+
+      <div class="token-head" style="margin-top:20px">BEHAVIOR</div>
+      <ul class="behavior">
+        <li>全部恢复只作用于当前搜索结果。</li>
+        <li>恢复后条目从列表移除，原工具会话文件不受影响。</li>
+        <li>空态与无匹配分别给出下一步文案。</li>
+      </ul>
+    </aside>
+  </div>
+
+  <footer class="board-foot">
+    <span>MEMRELAY DESIGN SYSTEM</span>
+    <span>PAGE · TRASH</span>
+    <span>09</span>
+  </footer>
+</section>
+</body>
+</html>

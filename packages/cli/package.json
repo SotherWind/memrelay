@@ -1,0 +1,46 @@
+{
+  "name": "memrelay",
+  "version": "0.1.0",
+  "description": "Cross-agent task relay: pick up the same task in another AI coding tool. 跨 AI coding 工具的任务接力",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SotherWind/memrelay.git"
+  },
+  "type": "module",
+  "bin": {
+    "memrelay": "bin/memrelay.cjs"
+  },
+  "files": [
+    "bin",
+    "dist",
+    "dsh-plugin"
+  ],
+  "engines": {
+    "node": ">=22.15"
+  },
+  "scripts": {
+    "build": "tsdown",
+    "prepack": "node ../../scripts/package-docs.mjs && pnpm -w run build",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "typecheck": "tsc --noEmit"
+  },
+  "keywords": [
+    "ai",
+    "agent",
+    "qoder",
+    "claude-code",
+    "codex",
+    "cursor",
+    "handoff",
+    "session",
+    "memory"
+  ],
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "tsdown": "^0.12.0",
+    "typescript": "^5.9.0",
+    "vitest": "^3.2.0"
+  }
+}

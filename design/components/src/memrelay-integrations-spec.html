@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>MemRelay · 接入页面规范</title>
+<link rel="stylesheet" href="./spec.css">
+</head>
+<body>
+<section class="board" id="board">
+  <header class="board-head">
+    <div>
+      <div class="eyebrow">MemRelay · Page Spec</div>
+      <h1>接入</h1>
+      <div class="subtitle">页面规范 · 简洁风 · Light / Dark</div>
+    </div>
+    <div class="head-meta">
+      <span class="tag">PAGE SPEC</span>
+      <span>07 / INTEGRATIONS</span>
+      <span>2026-10-30</span>
+    </div>
+  </header>
+
+  <div class="content">
+    <div class="previews">
+      <div class="preview">
+        <div class="preview-label"><span class="dot"></span>LIGHT · 浅色<span class="shot-meta">1440 × 1000</span></div>
+        <div class="preview-frame"><img src="./previews/integrations-light.png" alt="接入浅色页面"></div>
+      </div>
+      <div class="preview dark">
+        <div class="preview-label"><span class="dot"></span>DARK · 深色<span class="shot-meta">1440 × 1000</span></div>
+        <div class="preview-frame"><img src="./previews/integrations-dark.png" alt="接入深色页面"></div>
+      </div>
+    </div>
+
+    <aside class="spec">
+      <div class="spec-kicker">07 / INTEGRATIONS</div>
+      <h2>接入</h2>
+      <p class="spec-lead">按工具列出安装与接入状态，勾选后统一应用；未安装的工具保留在列表里，但呈虚线禁用态。</p>
+
+      <div class="anatomy">
+        <div><b>01</b><em>页头</em><span>标题 / 重新检测</span></div>
+        <div><b>02</b><em>提示</em><span>接入后的触发方式</span></div>
+        <div><b>03</b><em>工具卡</em><span>图标 / 名称 / 路径 / 状态</span></div>
+        <div><b>04</b><em>能力标签</em><span>启动提示 / 实时索引 / 扫描索引</span></div>
+        <div><b>05</b><em>勾选</em><span>已安装工具可切换</span></div>
+        <div><b>06</b><em>动作栏</em><span>待应用数 / 自测 / 应用</span></div>
+      </div>
+
+      <dl class="spec-rows">
+        <div class="spec-row"><dt>侧栏 / 正文</dt><dd><span class="mono">300 px</span> 固定 · 内边距 <span class="mono">38 / 56 / 26 px</span></dd></div>
+        <div class="spec-row"><dt>提示条</dt><dd>高 <span class="mono">46 px</span> · 内边距 <span class="mono">10 / 16 px</span> · accent-soft</dd></div>
+        <div class="spec-row"><dt>工具网格</dt><dd>2 列 · 间距 <span class="mono">12 px</span></dd></div>
+        <div class="spec-row"><dt>工具卡</dt><dd>高 ≥ <span class="mono">132 px</span> · 内边距 <span class="mono">15 / 17 / 13 px</span></dd></div>
+        <div class="spec-row"><dt>工具图标</dt><dd><span class="mono">38 px</span> · 圆角 <span class="mono">11 px</span> · 首字母 <span class="mono">12 / 800</span></dd></div>
+        <div class="spec-row"><dt>文字层级</dt><dd>名称 <span class="mono">14 / 650</span> · 路径 <span class="mono">10 px</span>等宽 · 说明 <span class="mono">11 px</span></dd></div>
+        <div class="spec-row"><dt>能力标签</dt><dd>高 <span class="mono">21 px</span> · 字号 <span class="mono">10.5 / 600</span> · 圆角 <span class="mono">6 px</span></dd></div>
+        <div class="spec-row"><dt>勾选框</dt><dd><span class="mono">18 px</span> · 圆角 <span class="mono">5 px</span> · 选中描边 accent</dd></div>
+        <div class="spec-row"><dt>动作栏</dt><dd>高 <span class="mono">60 px</span> · 内边距 <span class="mono">9 / 12 / 9 / 18 px</span></dd></div>
+        <div class="spec-row"><dt>禁用态</dt><dd>虚线边框 · surface-2 · 图标去色</dd></div>
+        <div class="spec-row"><dt>自测结果</dt><dd>等宽日志块 · 行间 <span class="mono">1 px</span>描边</dd></div>
+        <div class="spec-row"><dt>窄屏</dt><dd>≤1080 px 工具卡转单列</dd></div>
+      </dl>
+
+      <div class="token-head">COLOR TOKENS</div>
+      <div class="tokens">
+        <div class="token"><span class="pair"><i style="background:#FFFFFF"></i><i style="background:#1D1D23"></i></span><b>卡片</b><span>#FFFFFF / #1D1D23</span></div>
+        <div class="token"><span class="pair"><i style="background:#FCEFE9"></i><i style="background:#382728"></i></span><b>提示条</b><span>#FCEFE9 / #382728</span></div>
+        <div class="token"><span class="pair"><i style="background:#EDF3F7"></i><i style="background:#293039"></i></span><b>标签蓝</b><span>#EDF3F7 / #293039</span></div>
+        <div class="token"><span class="pair"><i style="background:#E9F5EF"></i><i style="background:#263132"></i></span><b>标签绿</b><span>#E9F5EF / #263132</span></div>
+        <div class="token"><span class="pair"><i style="background:#FBF0DC"></i><i style="background:#37302C"></i></span><b>标签琥珀</b><span>#FBF0DC / #37302C</span></div>
+        <div class="token"><span class="pair"><i style="background:#EBE6DD"></i><i style="background:#2D2D36"></i></span><b>描边</b><span>#EBE6DD / #2D2D36</span></div>
+      </div>
+
+      <div class="note"><b>预览为演示数据。</b>尺寸与色值取自当前实现实测。<b>皮肤差异。</b>漫画 / 像素皮肤：工具图标、勾选框加 2 px 描边；像素皮肤勾选框与卡片改直角，能力标签保持描边样式。</div>
+
+      <div class="token-head" style="margin-top:20px">BEHAVIOR</div>
+      <ul class="behavior">
+        <li>点击工具卡切换选中；未安装工具不可选。</li>
+        <li>动作栏实时显示待应用数量；应用与自测都在这里。</li>
+        <li>应用结果与自测日志追加在工具网格下方。</li>
+      </ul>
+    </aside>
+  </div>
+
+  <footer class="board-foot">
+    <span>MEMRELAY DESIGN SYSTEM</span>
+    <span>PAGE · INTEGRATIONS</span>
+    <span>07</span>
+  </footer>
+</section>
+</body>
+</html>

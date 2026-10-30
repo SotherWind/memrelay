@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>MemRelay · 隐私页面规范</title>
+<link rel="stylesheet" href="./spec.css">
+</head>
+<body>
+<section class="board" id="board">
+  <header class="board-head">
+    <div>
+      <div class="eyebrow">MemRelay · Page Spec</div>
+      <h1>隐私</h1>
+      <div class="subtitle">页面规范 · 简洁风 · Light / Dark</div>
+    </div>
+    <div class="head-meta">
+      <span class="tag">PAGE SPEC</span>
+      <span>08 / PRIVACY</span>
+      <span>2026-10-30</span>
+    </div>
+  </header>
+
+  <div class="content">
+    <div class="previews">
+      <div class="preview">
+        <div class="preview-label"><span class="dot"></span>LIGHT · 浅色<span class="shot-meta">1440 × 1000</span></div>
+        <div class="preview-frame"><img src="./previews/privacy-light.png" alt="隐私浅色页面"></div>
+      </div>
+      <div class="preview dark">
+        <div class="preview-label"><span class="dot"></span>DARK · 深色<span class="shot-meta">1440 × 1000</span></div>
+        <div class="preview-frame"><img src="./previews/privacy-dark.png" alt="隐私深色页面"></div>
+      </div>
+    </div>
+
+    <aside class="spec">
+      <div class="spec-kicker">08 / PRIVACY</div>
+      <h2>隐私</h2>
+      <p class="spec-lead">先看扫描面：排除目录、疑似密钥与自动脱敏。左栏管理排除目录，右栏按规则查看命中并预览脱敏结果。</p>
+
+      <div class="anatomy">
+        <div><b>01</b><em>概览</em><span>排除目录 / 疑似密钥 / 脱敏</span></div>
+        <div><b>02</b><em>排除目录</em><span>空态 / 列表 / 添加</span></div>
+        <div><b>03</b><em>密钥分类</em><span>全部 / OpenAI / AWS / GitHub</span></div>
+        <div><b>04</b><em>规则组</em><span>命中数 / 会话数 / 展开</span></div>
+        <div><b>05</b><em>脱敏预览</em><span>只保留遮罩片段</span></div>
+        <div><b>06</b><em>底部提示</em><span>本地扫描说明</span></div>
+      </div>
+
+      <dl class="spec-rows">
+        <div class="spec-row"><dt>概览卡</dt><dd>3 列 · 间距 <span class="mono">12 px</span> · 内边距 <span class="mono">15 / 18 px</span></dd></div>
+        <div class="spec-row"><dt>概览图标</dt><dd><span class="mono">40 px</span> · 圆角 <span class="mono">12 px</span> · 数值 <span class="mono">23 / 750</span></dd></div>
+        <div class="spec-row"><dt>左右栏</dt><dd><span class="mono">430 px / 1fr</span> · 间距 <span class="mono">14 px</span></dd></div>
+        <div class="spec-row"><dt>卡片</dt><dd>内边距 <span class="mono">18 / 20 px</span> · 圆角 <span class="mono">18 px</span></dd></div>
+        <div class="spec-row"><dt>空态</dt><dd><span class="mono">58 px</span> 虚线图标 · 圆角 <span class="mono">18 px</span></dd></div>
+        <div class="spec-row"><dt>添加目录</dt><dd>输入行 <span class="mono">38 px</span> · 基础控件 <span class="mono">36 px</span></dd></div>
+        <div class="spec-row"><dt>分类 chip</dt><dd>高 <span class="mono">27 px</span> · 字号 <span class="mono">11 px</span> · 间距 <span class="mono">6 px</span></dd></div>
+        <div class="spec-row"><dt>规则行</dt><dd>列 <span class="mono">34 / 1fr / 16 px</span> · 内边距 <span class="mono">14 / 0</span></dd></div>
+        <div class="spec-row"><dt>规则图标</dt><dd><span class="mono">34 px</span> · 圆角 <span class="mono">10 px</span> · amber-soft</dd></div>
+        <div class="spec-row"><dt>脱敏预览</dt><dd>圆角 <span class="mono">11 px</span> · 头部 <span class="mono">10 px</span> · 正文 <span class="mono">10.5 px</span></dd></div>
+        <div class="spec-row"><dt>底部提示</dt><dd>高 <span class="mono">39 px</span> · 内边距 <span class="mono">10 / 16 px</span></dd></div>
+        <div class="spec-row"><dt>窄屏</dt><dd>≤1080 px 单列 · 概览卡保持 3 列</dd></div>
+      </dl>
+
+      <div class="token-head">COLOR TOKENS</div>
+      <div class="tokens">
+        <div class="token"><span class="pair"><i style="background:#F1EEE8"></i><i style="background:#26262E"></i></span><b>排除灰</b><span>#F1EEE8 / #26262E</span></div>
+        <div class="token"><span class="pair"><i style="background:#FBF0DC"></i><i style="background:#37302C"></i></span><b>密钥琥珀</b><span>#FBF0DC / #37302C</span></div>
+        <div class="token"><span class="pair"><i style="background:#2E8B67"></i><i style="background:#64C49F"></i></span><b>脱敏绿</b><span>#2E8B67 / #64C49F</span></div>
+        <div class="token"><span class="pair"><i style="background:#EBE6DD"></i><i style="background:#2D2D36"></i></span><b>描边</b><span>#EBE6DD / #2D2D36</span></div>
+        <div class="token"><span class="pair"><i style="background:#1C1A17"></i><i style="background:#F2EFE9"></i></span><b>主文字</b><span>#1C1A17 / #F2EFE9</span></div>
+        <div class="token"><span class="pair"><i style="background:#948E84"></i><i style="background:#8B8792"></i></span><b>弱文字</b><span>#948E84 / #8B8792</span></div>
+      </div>
+
+      <div class="note"><b>预览为演示数据。</b>尺寸与色值取自当前实现实测。<b>皮肤差异。</b>漫画 / 像素皮肤：密钥图标与分类 chip 加描边，脱敏预览换直角或圆角；遮罩底色始终用琥珀，不改成品牌红。</div>
+
+      <div class="token-head" style="margin-top:20px">BEHAVIOR</div>
+      <ul class="behavior">
+        <li>排除目录支持 Enter 添加，添加后立即保存；原工具文件不受影响。</li>
+        <li>密钥组可展开并跳转到会话定位；界面只展示脱敏预览。</li>
+        <li>自动脱敏开启时，写入索引与上下文的片段会先替换。</li>
+      </ul>
+    </aside>
+  </div>
+
+  <footer class="board-foot">
+    <span>MEMRELAY DESIGN SYSTEM</span>
+    <span>PAGE · PRIVACY</span>
+    <span>08</span>
+  </footer>
+</section>
+</body>
+</html>

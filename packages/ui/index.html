@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="light">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="color-scheme" content="light dark" />
+    <link rel="icon" type="image/png" sizes="64x64" href="/favicon-64.png" />
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicon-180.png" />
+    <title>MemRelay</title>
+    <script>
+      // 首帧前定风格、深浅色与语言方向，避免闪烁
+      (function () {
+        try {
+          var s = localStorage.getItem("memrelay-style");
+          if (s !== "comic" && s !== "pixel" && s !== "minimal") s = "minimal";
+          var m = localStorage.getItem("memrelay-mode");
+          if (m !== "light" && m !== "dark" && m !== "system") {
+            var legacy = localStorage.getItem("memrelay-theme");
+            m = legacy === "light" || legacy === "dark" ? legacy : "light";
+          }
+          var t = m === "system"
+            ? (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light")
+            : m;
+          var mo = localStorage.getItem("memrelay-motion");
+          if (mo !== "on" && mo !== "off" && mo !== "system") mo = "on";
+          document.documentElement.dataset.style = s;
+          document.documentElement.dataset.theme = t;
+          document.documentElement.dataset.motion = mo;
+          document.documentElement.style.colorScheme = t;
+
+          // 与 i18n.tsx 的 detectLang 保持一致：首帧前定好方向，避免 RTL 闪动
+          var langs = {
+            "zh": "zh-CN", "en": "en", "zh-Hant": "zh-TW", "ja": "ja", "ko": "ko",
+            "es": "es", "fr": "fr", "de": "de", "fa": "fa", "pt-BR": "pt-BR", "id": "id"
+          };
+          var lang = localStorage.getItem("memrelay-lang");
+          if (!Object.prototype.hasOwnProperty.call(langs, lang)) {
+            var pref = navigator.languages && navigator.languages.length ? navigator.languages : [navigator.language || "en"];
+            lang = "en";
+            for (var i = 0; i < pref.length; i++) {
+              var tag = String(pref[i]).toLowerCase();
+              if (tag.indexOf("zh") === 0) { lang = /hant|tw|hk|mo/.test(tag) ? "zh-Hant" : "zh"; break; }
+              if (tag.indexOf("pt") === 0) { lang = "pt-BR"; break; }
+              if (tag.indexOf("in-") === 0 || tag === "in") { lang = "id"; break; }
+              var code = tag.slice(0, 2);
+              if (code === "en" || code === "ja" || code === "ko" || code === "es" ||
+                  code === "fr" || code === "de" || code === "fa" || code === "id") {
+                lang = code;
+                break;
+              }
+            }
+          }
+          document.documentElement.lang = langs[lang];
+          document.documentElement.dir = lang === "fa" ? "rtl" : "ltr";
+        } catch (e) {}
+      })();
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
