@@ -38,7 +38,23 @@ jobs:
       - run: pnpm test
       - name: 同步包内文档（README / LICENSE）
         run: node scripts/package-docs.mjs
+      - name: 校验发布内容
+        working-directory: packages/cli
+        run: |
+          node -e "
+            const fs = require('fs');
+            const pkg = require('./package.json');
+            const required = ['README.md', 'LICENSE', 'bin/memrelay.cjs', 'dist/cli.mjs', 'dsh-plugin/lib/index.js'];
+            for (const file of required) {
+              if (!fs.existsSync(file)) { console.error('缺少发布文件: ' + file); process.exit(1); }
+            }
+            for (const key of ['repository', 'homepage', 'bugs']) {
+              if (!pkg[key]) { console.error('缺少 package.json 字段: ' + key); process.exit(1); }
+            }
+            console.log('发布内容检查通过');
+          "
       - name: 发布到 npm
-        run: pnpm --filter memrelay publish --no-git-checks --provenance --access public --embed-readme --registry https://registry.npmjs.org
+        working-directory: packages/cli
+        run: npm publish --provenance --access public --registry https://registry.npmjs.org
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
