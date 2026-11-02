@@ -62,7 +62,7 @@ MemRelay 直接读各工具留在本机的会话记录，在你说"继续"时现
 - **旧 agent 零配合** — 不要求旧工具做任何事；续接时直接读它留在本机的会话记录，现场提炼进度、待办和下一步。
 - **一次接入，照常说话** — `memrelay setup` 之后不用特意提 memrelay；在带 Skill 或启动提示的工具里，说"继续完成 XX 任务"就会自动触发。
 - **进度自动跟上** — 经你同意后装在工具的 hooks 里，干活的进度实时写入本地索引，切到别的工具马上就能接上。
-- **主流工具全覆盖** — Claude Code、Qoder、Codex、Cursor、CodeBuddy、WorkBuddy、OpenCode、ZCode、Trae / Trae CN、DeepSeek Harness 的会话都能读（Trae / Trae CN、CodeBuddy 覆盖 CLI 与 IDE 两种格式）。
+- **主流工具全覆盖** — Claude Code、Qoder、Codex、Cursor、CodeBuddy、WorkBuddy、OpenCode、ZCode、Trae / Trae CN、DeepSeek Harness 的会话都能读（Trae / Trae CN 与 CodeBuddy 都覆盖 CLI 与 IDE 两种格式）。
 - **不依赖大模型** — 续接内容按规则在本地提炼，默认不联网、不需要 API Key；向量语义检索、会话摘要与偏好整理都是可选的 opt-in 增强（见下）。
 - **本地优先，可撤销** — 数据只存在本机 `~/.memrelay/`，不做遥测；对其他工具的会话只读，接入与偏好下发的写入都有清单、一键撤销。
 
@@ -165,14 +165,14 @@ memrelay ui
 
 - **语义检索**：多一条语义通道，搜「登录页」也能命中写 "auth page" 的会话；只嵌 user/assistant 正文，只接 OpenAI 兼容的远程 `/embeddings`，参考量级约 250 会话 ≈ 200 万字符 ≈ $0.03。未变化的内容用哈希对账跳过，换模型/主机可一键重建向量。[设计](https://github.com/SotherWind/memrelay/blob/main/docs/vector-search.md)
 - **会话摘要**：为每个会话生成 2~4 句进展摘要，显示在接力输出（`## 任务摘要（AI 生成）`）、任务列表与详情、会话浏览；素材只取标题、状态信号和会话尾部约 20 条正文（≤8KB），思考与工具输出不发送，250 会话全量约 100 万 token。素材未变则跳过，换模型/主机可一键重建摘要。[设计](https://github.com/SotherWind/memrelay/blob/main/docs/llm-summary.md)
-- **偏好整理**：只读导入各工具的全局记忆/规则，合并重复与矛盾后写回 MemRelay 标记块；只写标记块或专属文件、写前备份、可撤销，冲突不自动裁决；`memrelay ui` 运行期间自动检查来源变化。[设计](https://github.com/SotherWind/memrelay/blob/main/docs/tidy.md)
+- **偏好整理**：只读导入各工具的全局记忆/规则，合并重复与矛盾后写回 MemRelay 标记块或专属文件；写前备份、可撤销，冲突不自动裁决；`memrelay ui` 运行期间自动检查来源变化。[设计](https://github.com/SotherWind/memrelay/blob/main/docs/tidy.md)
 
 维护：`memrelay embed` / `memrelay summarize` / `memrelay tidy` 可全量补齐（可中断续跑）；`memrelay ui` 运行期间后台自动补。
 
 ## 隐私与安全
 
 - 数据只存在本机的 `~/.memrelay/`，不做遥测；默认不依赖任何云端服务。
-- 对其他工具的会话只读；写入仅限经你确认的接入（Skill、hooks / 插件配置）、偏好整理下发的 MemRelay 标记块或专属文件与 `~/.memrelay/`，且都有清单可撤销。
+- 对其他工具的会话只读；写入仅限经你确认的接入（Skill、hooks / 插件配置）、偏好整理下发的 MemRelay 标记块或专属文件，以及 `~/.memrelay/`；这些写入都有清单，可以撤销。
 - 入库与输出前都做密钥检测与遮盖（API Key、令牌、私钥、连接串等）。
 - 语义检索、会话摘要与偏好整理开启后，相关正文/记忆（已做密钥脱敏）会发送到你在配置里指定的接口主机（三者各自独立的接口）；默认关。
 - 界面服务只监听 `127.0.0.1`，带访问令牌并校验 Host 头；写请求另外拒绝跨源 Origin。

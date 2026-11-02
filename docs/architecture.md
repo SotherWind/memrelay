@@ -1,6 +1,6 @@
 # MemRelay 架构与开发方案
 
-> 最后校对：2026-11-02；对应 MemRelay 0.1.x（首发 0.1.0）。本文记录长期成立的设计与已落地的实现；迭代计划里标注完成状态。
+> 最后校对：2026-11-02，对应 MemRelay 0.1.x（首个版本 0.1.0）。本文记录长期成立的设计，并标注各迭代的完成状态。
 
 ## 1. 定位
 
@@ -22,7 +22,7 @@ MemRelay 让开发者在多个 AI coding agent 之间接力同一个任务。比
 |---|---|
 | 旧 agent 零配合 | 不要求旧 agent 写交接文档。额度用完时，它也写不了 |
 | 一次接入，照常使用 | 安装后运行一次 `memrelay setup`。之后不用特意提"memrelay"，也不用在每个工具里装东西 |
-| 会话只读，写入可撤销 | 读取会话；写入只发生在经用户确认的接入（各工具 skills 目录下的 `memrelay/`、hooks / 插件配置）、偏好下发（工具全局规则文件里的 MemRelay 标记块或专属记忆文件）和自己的 `~/.memrelay/`。全部记入清单、可撤销；从不修改其他工具的会话、权限和其余配置 |
+| 会话只读，写入可撤销 | 读取会话；写入只发生在三类位置：经用户确认的接入文件（各工具 skills 目录下的 `memrelay/`、hooks / 插件配置）、偏好下发内容（工具规则文件里的 MemRelay 标记块或专属记忆文件）和自己的 `~/.memrelay/`。全部记入清单、可撤销；从不修改其他工具的会话、权限和其余配置 |
 | 进度自动跟上 | 接入的工具通过 hook 在干活过程中自动更新索引；没装 hook 的工具照常可用，只是进度要等下一次扫描 |
 | 不依赖大模型 | 续接内容按规则提炼，不需要 API Key。会话摘要、语义检索与偏好整理各自可选配 OpenAI 兼容接口 |
 | 本地优先 | 数据不出本机，不做遥测 |
@@ -499,7 +499,7 @@ interface Message {
 ## 8. 安全与隐私
 
 - 数据只存在本机的 `~/.memrelay/`，不做遥测。唯一的对外发送，是用户自己配置的可选 AI 接口（语义检索 / 会话摘要 / 偏好整理各自独立），而且只发送各自需要的内容（正文片段 / 会话尾部素材 / 全局规则文本，均已脱敏）。
-- 对其他工具的会话只读；写入仅限经用户确认的接入（Skill、hooks / 插件配置）、偏好下发的 MemRelay 标记块或专属记忆文件与 `~/.memrelay/`，全部记在清单里，可以撤销。
+- 对其他工具的会话只读；写入仅限经用户确认的接入（Skill、hooks / 插件配置）、偏好下发的 MemRelay 标记块或专属记忆文件，以及 `~/.memrelay/`；全部记在清单里，可以撤销。
 - 入库和输出之前都检测密钥，包括 API Key、令牌、私钥、连接串、`password=` 等，规则带版本号。输出时一律遮盖，库里只存遮盖后的预览。
 - 界面服务只监听 127.0.0.1，带访问令牌，并校验 Host 头；写请求还会拒绝与本机地址不同源的 Origin。
 - 可选 AI 接口的 Key 存在 `~/.memrelay/memrelay.db` 的 `settings` 表，目录权限仅限当前用户。
@@ -538,7 +538,7 @@ memrelay/                            仓库是 pnpm workspace；发布物只有 
 | 本地服务 | Node 自带的 `node:http` 加自建轻量路由，和命令行一起打包 |
 | 数据库 | `node:sqlite`（FTS5 从 Node 22.16 起可用） |
 | 测试 | Vitest |
-| CI 与发布 | GitHub Actions：三平台 × Node 22.16 / 22 最新 / 24 跑测试，另跑入口程序 e2e；打 tag 后用 `npm publish` 发布（pnpm 11 不会把 README 写进 registry 元数据），附带 provenance |
+| CI 与发布 | GitHub Actions：三平台 × Node 22.16 / 22 最新 / 24 跑测试，另跑入口程序 e2e；打 tag 后运行 `npm publish`（pnpm 11 不会把 README 写进 registry 元数据），附带 provenance |
 | `package.json` | `packages/cli` 的 `engines.node` 为 `>=22.16`；`bin.memrelay` 指向 `bin/memrelay.cjs`；`files` 包含 `bin`、`dist`、`dsh-plugin`；`repository` / `homepage` / `bugs` 指向 GitHub 仓库 |
 
 ## 10. 测试策略

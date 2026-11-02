@@ -1,7 +1,7 @@
 # MemRelay 会话摘要（LLM 增强）设计
 
 > 状态：已实现（2026-10-16）。本文为实现依据；拍板结果与实施细节点见 §14。
-> v1→v2 修订：按"该实现的地方都要实现、架构一次选对"重写——消费点从 2 处扩为 7 处全量落点；队列基建抽公共原语（两个队列共用）；补查询前定向生成。不做分期阉割。
+> 修订记录：本文按"该实现的地方都要实现、架构一次选对"重写过一次——消费点从 2 处扩为 7 处全量落点；队列基建抽公共原语（两个队列共用）；补查询前定向生成。不做分期阉割。
 
 ## 1. 定位
 
@@ -172,7 +172,7 @@ TDD 要点：`core/llm.ts` 伪 fetch 注入（离线可测）；素材组装 / �
 **实施要点（与本文落点一致）**：
 - 新增 `store/queue.ts`（队列公共原语，embed_queue 一并迁移，见 §5）、`core/llm.ts`、`store/summaries-store.ts`、`store/summarizer.ts`、`cli/commands/summarize.ts`；schema v1。
 - 7 处消费点全部接通；server 三端点（status / backfill{rebuild} / clear）+ settings `summary` 块（开启转换自动全量入队）；ui 后台循环与 doctor 均接摘要 drain（各自预算、连败退避）。
-- 当时测试 260 全绿（新增 summaries 15 个、server HTTP +2）；真机冒烟（`test/manual/summary-smoke.mjs`，真实库副本 + 本地伪对话服务）：v4→v5 迁移 OK；236 会话生成（236 次请求，约 1.3s 本地耗时）、二轮 hash 对账零调用；search / resume 输出均带摘要行。
+- 当时测试 260 全绿（新增 summaries 15 个、server HTTP +2）；真机冒烟（`test/manual/summary-smoke.mjs`，真实库副本 + 本地伪对话服务）：schema v4→v5 迁移 OK；236 会话生成（236 次请求，约 1.3s 本地耗时）、二轮 hash 对账零调用；search / resume 输出均带摘要行。
 - ⚠ 实测校准项：伪服务无法验证真实模型下的摘要质量与定向生成耗时，待用户用自己的模型跑真实场景后回看 §14.3 的预算。
 
 ## 15. 修订：接口按功能独立 + 有界并发（2026-10-23）
