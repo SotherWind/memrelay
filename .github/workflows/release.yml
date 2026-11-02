@@ -54,6 +54,7 @@ jobs:
             console.log('发布内容检查通过');
           "
       - name: 发布到 npm
+        # pnpm 11 不会把 README 写进 registry 元数据，npm 页面会显示空白；这里必须用 npm publish。
         working-directory: packages/cli
         run: npm publish --provenance --access public --registry https://registry.npmjs.org
         env:

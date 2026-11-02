@@ -537,7 +537,7 @@ memrelay/                            仓库是 pnpm workspace；发布物只有 
 | 本地服务 | Node 自带的 `node:http` 加自建轻量路由，和命令行一起打包 |
 | 数据库 | `node:sqlite`（FTS5 从 Node 22.16 起可用） |
 | 测试 | Vitest |
-| CI 与发布 | GitHub Actions：三平台 × Node 22.16 / 22 最新 / 24 跑测试，另跑入口程序 e2e；打 tag 后发布到 npm，附带 provenance |
+| CI 与发布 | GitHub Actions：三平台 × Node 22.16 / 22 最新 / 24 跑测试，另跑入口程序 e2e；打 tag 后用 `npm publish` 发布（pnpm 11 不会把 README 写进 registry 元数据），附带 provenance |
 | `package.json` | `packages/cli` 的 `engines.node` 为 `>=22.16`；`bin.memrelay` 指向 `bin/memrelay.cjs`；`files` 包含 `bin`、`dist`、`dsh-plugin`；`repository` / `homepage` / `bugs` 指向 GitHub 仓库 |
 
 ## 10. 测试策略
