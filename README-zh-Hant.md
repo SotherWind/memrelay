@@ -59,7 +59,7 @@ MemRelay 直接讀取各工具留在本機的工作階段記錄，在你說「�
 - **舊 agent 零配合** — 不要求舊工具做任何事；續接時直接讀它留在本機的工作階段記錄，現場提煉進度、待辦與下一步。
 - **一次接入，照常說話** — `memrelay setup` 之後不用特別提 memrelay；在帶 Skill 或啟動提示的工具裡，說「繼續完成 XX 任務」就會自動觸發。
 - **進度自動跟上** — 經你同意後裝在工具的 hooks 裡，工作進度即時寫入本機索引，切到別的立即就能接上。
-- **主流工具全覆蓋** — Claude Code、Qoder、Codex、Cursor、CodeBuddy、WorkBuddy、OpenCode、ZCode、Trae / Trae CN、DeepSeek Harness 的工作階段都能讀（Trae CN、CodeBuddy 支援 CLI 與 IDE 兩種格式）。
+- **主流工具全覆蓋** — Claude Code、Qoder、Codex、Cursor、CodeBuddy、WorkBuddy、OpenCode、ZCode、Trae / Trae CN、DeepSeek Harness 的工作階段都能讀（Trae / Trae CN、CodeBuddy 覆蓋 CLI 與 IDE 兩種格式）。
 - **不依賴大型語言模型** — 續接內容依規則在本機提煉，預設不連網、不需要 API Key；向量語意搜尋、工作階段摘要與偏好整理都是可選的 opt-in 增強（見下）。
 - **本機優先，可復原** — 資料只存在本機 `~/.memrelay/`，不做遙測；對其他工具的工作階段唯讀，接入與偏好下發的寫入都有清單、可一鍵復原。
 

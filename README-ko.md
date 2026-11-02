@@ -59,7 +59,7 @@ MemRelay는 각 도구가 로컬에 남긴 세션 기록을 직접 읽고, 당�
 - **기존 에이전트의 협조 불필요** — 기존 도구에 아무것도 요구하지 않습니다. 로컬 세션 기록을 직접 읽어 진행 상황, 남은 작업, 다음 단계를 즉석에서 추출합니다.
 - **한 번 연결하면 평소처럼 말하면 됩니다** — `memrelay setup` 후에는 memrelay를 특별히 언급할 필요 없이, Skill 또는 시작 힌트가 있는 도구에서 「XX 작업을 계속해」라고 하면 자동으로 실행됩니다.
 - **진행 상황이 자동으로 따라옵니다** — 동의 후 도구의 hooks에 설치되어 작업 진행 상황이 실시간에 가깝게 로컬 인덱스에 기록되고, 다른 도구로 전환하면 바로 이어받을 수 있습니다.
-- **주요 도구 전부 지원** — Claude Code, Qoder, Codex, Cursor, CodeBuddy, WorkBuddy, OpenCode, ZCode, Trae / Trae CN, DeepSeek Harness의 세션을 읽습니다 (Trae CN, CodeBuddy는 CLI와 IDE 두 형식 모두 지원).
+- **주요 도구 전부 지원** — Claude Code, Qoder, Codex, Cursor, CodeBuddy, WorkBuddy, OpenCode, ZCode, Trae / Trae CN, DeepSeek Harness의 세션을 읽습니다 (Trae / Trae CN, CodeBuddy는 CLI와 IDE 두 형식을 모두 커버).
 - **LLM 불필요** — 인수인계 내용은 규칙 기반으로 로컬에서 추출하며 기본적으로 오프라인, API 키도 필요 없습니다. 벡터 의미 검색, 세션 요약, 환경설정 정리는 선택적 옵트인 확장입니다 (아래 참고).
 - **로컬 우선, 되돌릴 수 있음** — 데이터는 `~/.memrelay/`에만 저장되고 텔레메트리는 없습니다. 다른 도구의 세션은 읽기 전용이며, 연동과 환경설정 정리의 모든 쓰기는 매니페스트에 기록되어 원클릭으로 되돌릴 수 있습니다.
 

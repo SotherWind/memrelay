@@ -62,7 +62,7 @@ MemRelay 直接读各工具留在本机的会话记录，在你说"继续"时现
 - **旧 agent 零配合** — 不要求旧工具做任何事；续接时直接读它留在本机的会话记录，现场提炼进度、待办和下一步。
 - **一次接入，照常说话** — `memrelay setup` 之后不用特意提 memrelay；在带 Skill 或启动提示的工具里，说"继续完成 XX 任务"就会自动触发。
 - **进度自动跟上** — 经你同意后装在工具的 hooks 里，干活的进度实时写入本地索引，切到别的工具马上就能接上。
-- **主流工具全覆盖** — Claude Code、Qoder、Codex、Cursor、CodeBuddy、WorkBuddy、OpenCode、ZCode、Trae / Trae CN、DeepSeek Harness 的会话都能读（Trae CN、CodeBuddy 支持 CLI 与 IDE 两种格式）。
+- **主流工具全覆盖** — Claude Code、Qoder、Codex、Cursor、CodeBuddy、WorkBuddy、OpenCode、ZCode、Trae / Trae CN、DeepSeek Harness 的会话都能读（Trae / Trae CN、CodeBuddy 覆盖 CLI 与 IDE 两种格式）。
 - **不依赖大模型** — 续接内容按规则在本地提炼，默认不联网、不需要 API Key；向量语义检索、会话摘要与偏好整理都是可选的 opt-in 增强（见下）。
 - **本地优先，可撤销** — 数据只存在本机 `~/.memrelay/`，不做遥测；对其他工具的会话只读，接入与偏好下发的写入都有清单、一键撤销。
 

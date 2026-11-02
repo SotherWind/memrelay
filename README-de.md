@@ -60,7 +60,7 @@ MemRelay liest die Sitzungsprotokolle, die jedes Tool lokal auf deinem Rechner a
 - **Keine Mithilfe des alten Agents** — das alte Tool muss nichts tun; MemRelay liest sein lokales Sitzungsprotokoll und destilliert Fortschritt, offene Punkte und nächste Schritte.
 - **Einmal einrichten, dann einfach sprechen** — nach `memrelay setup` musst du memrelay nie erwähnen; in Tools mit Skill oder Start-Hinweis wird „Setze Aufgabe XX fort“ automatisch ausgelöst.
 - **Fortschritt bleibt aktuell** — mit deiner Zustimmung wird es in die Hooks der Tools installiert; Fortschritt landet nahezu in Echtzeit im lokalen Index, das nächste Tool kann sofort übernehmen.
-- **Die gängigen Tools abgedeckt** — liest Sitzungen von Claude Code, Qoder, Codex, Cursor, CodeBuddy, WorkBuddy, OpenCode, ZCode, Trae / Trae CN und DeepSeek Harness (Trae CN und CodeBuddy in CLI- und IDE-Format).
+- **Die gängigen Tools abgedeckt** — liest Sitzungen von Claude Code, Qoder, Codex, Cursor, CodeBuddy, WorkBuddy, OpenCode, ZCode, Trae / Trae CN und DeepSeek Harness (Trae / Trae CN und CodeBuddy decken CLI- und IDE-Format ab).
 - **Kein LLM nötig** — Übergabeinhalte werden lokal nach Regeln destilliert; standardmäßig offline, kein API-Key nötig; semantische Vektorsuche, Sitzungszusammenfassungen und Präferenzen-Aufräumen sind optionale Opt-in-Erweiterungen (siehe unten).
 - **Lokal zuerst, rückgängig machbar** — Daten bleiben in `~/.memrelay/`, keine Telemetrie; die Sitzungen anderer Tools werden nur gelesen, und jeder Schreibvorgang von Integration oder Präferenz-Synchronisierung ist in einem Manifest erfasst und lässt sich rückgängig machen.
 

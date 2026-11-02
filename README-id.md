@@ -60,7 +60,7 @@ MemRelay membaca catatan sesi yang disimpan setiap alat di komputer Anda dan, sa
 - **Tanpa kerja sama dari agen lama** — tidak meminta apa pun dari alat lama; membaca catatan sesi lokalnya dan merangkum progres, sisa pekerjaan, serta langkah berikutnya.
 - **Sekali pasang, lalu bicara seperti biasa** — setelah `memrelay setup` Anda tidak perlu menyebut memrelay; di alat yang memiliki Skill atau petunjuk mulai, «lanjutkan tugas XX» terpicu otomatis.
 - **Progres tetap terkini** — dengan persetujuan Anda, ia terpasang di hooks alat; progres masuk ke indeks lokal hampir real-time dan alat berikutnya bisa langsung melanjutkan.
-- **Alat utama tercakup** — membaca sesi Claude Code, Qoder, Codex, Cursor, CodeBuddy, WorkBuddy, OpenCode, ZCode, Trae / Trae CN, dan DeepSeek Harness (Trae CN dan CodeBuddy dalam format CLI dan IDE).
+- **Alat utama tercakup** — membaca sesi Claude Code, Qoder, Codex, Cursor, CodeBuddy, WorkBuddy, OpenCode, ZCode, Trae / Trae CN, dan DeepSeek Harness (Trae / Trae CN dan CodeBuddy mencakup format CLI dan IDE).
 - **Tanpa LLM** — materi serah-terima diekstrak lokal dengan aturan; offline secara default dan tanpa API key; pencarian semantik vektor, ringkasan sesi, dan penataan preferensi adalah peningkatan opsional opt-in (lihat di bawah).
 - **Lokal dulu dan bisa dibatalkan** — data hanya di `~/.memrelay/`, tanpa telemetri; sesi alat lain hanya dibaca, dan setiap penulisan integrasi atau penataan preferensi tercatat di manifes serta bisa dibatalkan.
 

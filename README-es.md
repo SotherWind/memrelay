@@ -60,7 +60,7 @@ MemRelay lee los registros de sesión que cada herramienta guarda en tu máquina
 - **Cero cooperación del agente anterior** — no exige nada a la herramienta anterior; lee su registro de sesión local y destila progreso, pendientes y próximos pasos.
 - **Configúralo una vez y habla con normalidad** — tras `memrelay setup` nunca necesitas mencionar memrelay; en las herramientas con Skill o aviso de inicio, «continúa la tarea XX» lo activa automáticamente.
 - **El progreso se mantiene al día** — con tu consentimiento se instala en los hooks de las herramientas, de modo que el progreso llega al índice local casi en tiempo real y la siguiente herramienta puede continuar de inmediato.
-- **Las principales herramientas cubiertas** — lee sesiones de Claude Code, Qoder, Codex, Cursor, CodeBuddy, WorkBuddy, OpenCode, ZCode, Trae / Trae CN y DeepSeek Harness (Trae CN y CodeBuddy en formato CLI e IDE).
+- **Las principales herramientas cubiertas** — lee sesiones de Claude Code, Qoder, Codex, Cursor, CodeBuddy, WorkBuddy, OpenCode, ZCode, Trae / Trae CN y DeepSeek Harness (Trae / Trae CN y CodeBuddy cubren formatos CLI e IDE).
 - **Sin LLM** — el traspaso se destila localmente por reglas; sin conexión por defecto y sin API key; la búsqueda semántica vectorial, los resúmenes de sesión y la organización de preferencias son mejoras opcionales opt-in (ver abajo).
 - **Local primero y reversible** — los datos viven solo en `~/.memrelay/`, sin telemetría; las sesiones de las demás herramientas son de solo lectura y cada escritura de integración u organización de preferencias queda registrada en un manifiesto y se puede deshacer.
 

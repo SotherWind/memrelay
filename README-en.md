@@ -60,7 +60,7 @@ MemRelay reads the session logs each tool keeps on your machine, and distills th
 - **Zero cooperation from the old agent** — no handoff document required; MemRelay reads its local session log directly and distills progress, todos and next steps.
 - **Set up once, then just talk** — after `memrelay setup` you never need to mention memrelay; in tools with a Skill or session-start hint, "continue the XX task" triggers it automatically.
 - **Progress keeps up** — with your consent it installs into your tools' hook systems, so progress lands in the local index in near real time and the next tool can pick up immediately.
-- **Mainstream tools covered** — reads sessions from Claude Code, Qoder, Codex, Cursor, CodeBuddy, WorkBuddy, OpenCode, ZCode, Trae / Trae CN and DeepSeek Harness (Trae CN and CodeBuddy in both CLI and IDE formats).
+- **Mainstream tools covered** — reads sessions from Claude Code, Qoder, Codex, Cursor, CodeBuddy, WorkBuddy, OpenCode, ZCode, Trae / Trae CN and DeepSeek Harness (Trae / Trae CN and CodeBuddy cover both CLI and IDE formats).
 - **No LLM required** — handoff content is distilled locally by rules; offline by default, no API key needed; semantic vector search, session summaries and preference tidy are optional opt-in enhancements (see below).
 - **Local-first and undoable** — data stays in `~/.memrelay/`, no telemetry; other tools' sessions are read-only, and every integration or preference-sync write is tracked in a manifest and can be undone.
 

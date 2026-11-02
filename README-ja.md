@@ -59,7 +59,7 @@ MemRelay は各ツールがローカルに残したセッション記録を直�
 - **旧エージェント側の協力は不要** — 旧ツールに何も求めません。ローカルのセッション記録を直接読み、進捗・残タスク・次の一手をその場で抽出します。
 - **一度セットアップすれば、あとは普通に話すだけ** — `memrelay setup` 後は memrelay を意識する必要はありません。Skill または起動ヒントがあるツールでは、「XX タスクを続けて」で自動的に起動します。
 - **進捗が自動で追いつく** — 同意のうえでツールの hooks に組み込まれ、作業の進捗がほぼリアルタイムでローカルインデックスに書き込まれます。別のツールに切り替えてもすぐ引き継げます。
-- **主要ツールを網羅** — Claude Code、Qoder、Codex、Cursor、CodeBuddy、WorkBuddy、OpenCode、ZCode、Trae / Trae CN、DeepSeek Harness のセッションを読めます（Trae CN・CodeBuddy は CLI と IDE の両形式に対応）。
+- **主要ツールを網羅** — Claude Code、Qoder、Codex、Cursor、CodeBuddy、WorkBuddy、OpenCode、ZCode、Trae / Trae CN、DeepSeek Harness のセッションを読めます（Trae / Trae CN・CodeBuddy は CLI と IDE の両形式をカバー）。
 - **LLM 不要** — 引き継ぎ内容はルールベースでローカル抽出。既定ではオフライン・API キー不要。ベクトル意味検索、セッション要約、設定の整理は任意のオプトイン拡張です（下記）。
 - **ローカル優先・取り消し可能** — データは `~/.memrelay/` のみ、テレメトリなし。他ツールのセッションは読み取り専用で、連携や設定整理の書き込みはすべてマニフェスト化されワンクリックで取り消せます。
 
