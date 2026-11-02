@@ -1,6 +1,6 @@
 {
   "name": "memrelay",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Cross-agent task relay: pick up the same task in another AI coding tool. 跨 AI coding 工具的任务接力",
   "license": "MIT",
   "repository": {
