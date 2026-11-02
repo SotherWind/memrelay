@@ -1,17 +1,23 @@
+<p align="center">
+  <a href="https://github.com/SotherWind/memrelay">
+    <img src="https://raw.githubusercontent.com/SotherWind/memrelay/main/design/logo/memrelay-mark-minimal-light.png" alt="MemRelay" width="320">
+  </a>
+</p>
+
 <h1 align="center">MemRelay</h1>
 
 <p align="center">
-  <a href="README-en.md">English</a> ·
-  <a href="README-de.md">Deutsch</a> ·
-  <a href="README-es.md">Español</a> ·
-  <a href="README-fr.md">Français</a> ·
-  <a href="README-ja.md">日本語</a> ·
-  <a href="README-ko.md">한국어</a> ·
-  <a href="README-fa.md">فارسی</a> ·
-  <a href="README-pt-BR.md">Português</a> ·
-  <a href="README-id.md">Bahasa Indonesia</a> ·
+  <a href="https://github.com/SotherWind/memrelay/blob/main/README-en.md">English</a> ·
+  <a href="https://github.com/SotherWind/memrelay/blob/main/README-de.md">Deutsch</a> ·
+  <a href="https://github.com/SotherWind/memrelay/blob/main/README-es.md">Español</a> ·
+  <a href="https://github.com/SotherWind/memrelay/blob/main/README-fr.md">Français</a> ·
+  <a href="https://github.com/SotherWind/memrelay/blob/main/README-ja.md">日本語</a> ·
+  <a href="https://github.com/SotherWind/memrelay/blob/main/README-ko.md">한국어</a> ·
+  <a href="https://github.com/SotherWind/memrelay/blob/main/README-fa.md">فارسی</a> ·
+  <a href="https://github.com/SotherWind/memrelay/blob/main/README-pt-BR.md">Português</a> ·
+  <a href="https://github.com/SotherWind/memrelay/blob/main/README-id.md">Bahasa Indonesia</a> ·
   <strong>简体中文</strong> ·
-  <a href="README-zh-Hant.md">繁體中文</a>
+  <a href="https://github.com/SotherWind/memrelay/blob/main/README-zh-Hant.md">繁體中文</a>
 </p>
 
 <p align="center">
@@ -21,12 +27,18 @@
 </p>
 
 <p align="center">
-  <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="License: MIT"></a>
+  <a href="https://www.npmjs.com/package/memrelay"><img src="https://img.shields.io/npm/v/memrelay?color=cb3837&logo=npm&logoColor=white" alt="npm version"></a>
+  <a href="https://www.npmjs.com/package/memrelay"><img src="https://img.shields.io/npm/dm/memrelay?color=cb3837" alt="npm downloads"></a>
+  <a href="https://github.com/SotherWind/memrelay/actions/workflows/ci.yml"><img src="https://github.com/SotherWind/memrelay/actions/workflows/ci.yml/badge.svg" alt="CI"></a>
+  <a href="https://github.com/SotherWind/memrelay/blob/main/LICENSE"><img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="License: MIT"></a>
   <img src="https://img.shields.io/badge/Node-%E2%89%A5%2022.16-339933?logo=nodedotjs&logoColor=white" alt="Node >= 22.16">
   <img src="https://img.shields.io/badge/platform-macOS%20%7C%20Linux%20%7C%20Windows-blue" alt="macOS | Linux | Windows">
 </p>
 
 <p align="center">
+  <a href="https://www.npmjs.com/package/memrelay">npm</a> ·
+  <a href="https://github.com/SotherWind/memrelay">GitHub</a> ·
+  <a href="https://github.com/SotherWind/memrelay/issues">Issues</a> ·
   <a href="#安装">安装</a> ·
   <a href="#快速开始">快速开始</a> ·
   <a href="#亮点">亮点</a> ·
@@ -65,8 +77,7 @@ memrelay setup
 
 `setup` 会：**检测**本机装了哪些工具 → **列出**将写入的文件（含启动提示与实时索引）→ **确认一次** → 写入 → 各终端自测。
 
-> [!NOTE]
-> 想先试试不想留痕迹？`memrelay setup --undo` 一键撤销写入（保留数据）；再加 `--purge` 连数据一起删。
+> **提示**：想先试试不想留痕迹？`memrelay setup --undo` 一键撤销写入（保留数据）；再加 `--purge` 连数据一起删。
 
 ## 快速开始
 
@@ -120,8 +131,7 @@ Agent 在会话里自动运行（只读、只打印）：
 | Trae / Trae CN | CLI 是 Codex 兼容格式；IDE 会话库加密，由 hook 事件实时重建 |
 | DeepSeek Harness | `~/.dsh/sessions/<编码项目目录>/session-<id>/session.v4.jsonl.zstd`（多帧 zstd，只读） |
 
-> [!NOTE]
-> 路径按各平台默认数据目录解析：Cursor / CodeBuddy 上表为 Windows 路径，macOS 为 `~/Library/Application Support/…`，Linux 为 `~/.config/…`；OpenCode 在各平台都使用 `~/.local/share/opencode`，`~` 指当前用户主目录。
+> **路径说明**：Cursor / CodeBuddy 上表为 Windows 路径，macOS 为 `~/Library/Application Support/…`，Linux 为 `~/.config/…`；OpenCode 在各平台都使用 `~/.local/share/opencode`，`~` 指当前用户主目录。
 
 接入分两层，全部走清单、可撤销：**Skill**（工具知道说"继续"时要调 memrelay）写入 Claude Code / Qoder / Codex / Cursor / CodeBuddy / WorkBuddy / Trae / Trae CN / DeepSeek Harness 的技能目录；**实时索引**（干活进度秒级入库）装在 Claude Code / Qoder / Codex / CodeBuddy / WorkBuddy / ZCode / Trae CN（hooks 三件套；CodeBuddy 的 CLI 与 IDE 共用同一份用户设置）与 OpenCode / DeepSeek Harness（各自的官方插件机制）——dsh 的实时索引用进程内插件（绕开它沙箱对 hook 进程的限制），另装官方 hooks 兼容桥负责启动提示与兼容。
 
@@ -151,9 +161,9 @@ memrelay ui
 
 语义检索、会话摘要与偏好整理默认关闭，都在 `memrelay ui` 配置页单独填写接口（三者互不影响，可指向不同上游）；发送前会做密钥脱敏；语义检索与摘要失败时自动回退到现有规则提炼，偏好整理失败时不写回。
 
-- **语义检索**：多一条语义通道，搜「登录页」也能命中写 "auth page" 的会话；只嵌 user/assistant 正文，只接 OpenAI 兼容的远程 `/embeddings`，参考量级约 250 会话 ≈ 200 万字符 ≈ $0.03。未变化的内容用哈希对账跳过，换模型/主机可一键重建向量。[设计](docs/vector-search.md)
-- **会话摘要**：为每个会话生成 2~4 句进展摘要，显示在接力输出（`## 任务摘要（AI 生成）`）、任务列表与详情、会话浏览；素材只取标题、状态信号和会话尾部约 20 条正文（≤8KB），思考与工具输出不发送，250 会话全量约 100 万 token。素材未变则跳过，换模型/主机可一键重建摘要。[设计](docs/llm-summary.md)
-- **偏好整理**：只读导入各工具的全局记忆/规则，合并重复与矛盾后写回 MemRelay 标记块；只写标记块、写前备份、可撤销，冲突不自动裁决；`memrelay ui` 运行期间自动检查来源变化。[设计](docs/tidy.md)
+- **语义检索**：多一条语义通道，搜「登录页」也能命中写 "auth page" 的会话；只嵌 user/assistant 正文，只接 OpenAI 兼容的远程 `/embeddings`，参考量级约 250 会话 ≈ 200 万字符 ≈ $0.03。未变化的内容用哈希对账跳过，换模型/主机可一键重建向量。[设计](https://github.com/SotherWind/memrelay/blob/main/docs/vector-search.md)
+- **会话摘要**：为每个会话生成 2~4 句进展摘要，显示在接力输出（`## 任务摘要（AI 生成）`）、任务列表与详情、会话浏览；素材只取标题、状态信号和会话尾部约 20 条正文（≤8KB），思考与工具输出不发送，250 会话全量约 100 万 token。素材未变则跳过，换模型/主机可一键重建摘要。[设计](https://github.com/SotherWind/memrelay/blob/main/docs/llm-summary.md)
+- **偏好整理**：只读导入各工具的全局记忆/规则，合并重复与矛盾后写回 MemRelay 标记块；只写标记块、写前备份、可撤销，冲突不自动裁决；`memrelay ui` 运行期间自动检查来源变化。[设计](https://github.com/SotherWind/memrelay/blob/main/docs/tidy.md)
 
 维护：`memrelay embed` / `memrelay summarize` / `memrelay tidy` 可全量补齐（可中断续跑）；`memrelay ui` 运行期间后台自动补。
 
@@ -179,8 +189,8 @@ cd packages/cli && npm link   # 可选：把 memrelay 命令装进 PATH（等效
 node packages/cli/test/e2e/bootstrap.mjs   # 入口程序端到端
 ```
 
-设计与迭代计划见 [docs/architecture.md](docs/architecture.md)。
+设计与迭代计划见 [docs/architecture.md](https://github.com/SotherWind/memrelay/blob/main/docs/architecture.md)。
 
 ## License
 
-[MIT](LICENSE)
+[MIT](https://github.com/SotherWind/memrelay/blob/main/LICENSE)

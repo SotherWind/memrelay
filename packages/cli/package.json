@@ -5,7 +5,12 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/SotherWind/memrelay.git"
+    "url": "git+https://github.com/SotherWind/memrelay.git",
+    "directory": "packages/cli"
+  },
+  "homepage": "https://github.com/SotherWind/memrelay#readme",
+  "bugs": {
+    "url": "https://github.com/SotherWind/memrelay/issues"
   },
   "type": "module",
   "bin": {
@@ -29,13 +34,23 @@
   "keywords": [
     "ai",
     "agent",
+    "coding-agent",
+    "cross-agent",
+    "task-relay",
+    "context-handoff",
+    "session",
+    "memory",
+    "cli",
     "qoder",
     "claude-code",
     "codex",
     "cursor",
-    "handoff",
-    "session",
-    "memory"
+    "trae",
+    "opencode",
+    "zcode",
+    "codebuddy",
+    "workbuddy",
+    "deepseek"
   ],
   "devDependencies": {
     "@types/node": "^24.0.0",

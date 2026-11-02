@@ -1,6 +1,6 @@
 # MemRelay 架构与开发方案
 
-> 版本 v1，2026-10-13 定稿。本文只记录长期成立的设计和计划，开发进度不写在这里。
+> 版本 v1.1，2026-11-02 校对，对应 MemRelay 0.1.0。本文记录长期成立的设计与已落地的实现；迭代计划里标注完成状态。
 
 ## 1. 定位
 
@@ -177,13 +177,13 @@ interface Adapter {
 
 | 工具 | 作为来源 | 会话位置与格式 | 作为接手工具（Skill 目录） |
 |---|---|---|---|
-| Claude Code（命令行、VS Code 扩展） | 迭代 1 | `~/.claude/projects/<编码后的路径>/<会话 id>.jsonl`。JSONL 格式，`uuid` 和 `parentUuid` 构成对话树。默认约 30 天后自动清理 | `~/.claude/skills/` |
-| Qoder（命令行、桌面版） | 迭代 1 | `~/.qoder/projects/<编码后的路径>/<会话 id>.jsonl`。与 Claude Code 结构相同，另有 `workspace-directories`、`runtime-config`、`active-leaf` 等记录类型 | `~/.qoder/skills/` |
-| Codex（命令行、IDE 扩展、桌面版） | 迭代 2 | `~/.codex/sessions/YYYY/MM/DD/rollout-*.jsonl`，可能被压缩成 `.jsonl.zst`。`state_*.sqlite` 的 `threads` 表里有标题、cwd、分支 | `~/.agents/skills/`，兼容旧位置 `~/.codex/skills/` |
-| Cursor | 迭代 4 | 用户数据目录下的 `globalStorage/state.vscdb`（`cursorDiskKV` 表，明文，只读） | 它会读 `~/.cursor/skills`、`~/.agents/skills`、`~/.claude/skills`、`~/.codex/skills`，不用单独放 |
-| Qoder IDE | 迭代 4 | `~/.qoder/projects/<编码后的路径>/*.jsonl`（IDE transcript 格式） | 与 Qoder 共用 `~/.qoder/skills/` |
-| CodeBuddy | 迭代 6 | CLI：`~/.codebuddy/projects/<编码路径>/<会话 id>.jsonl`（与 WorkBuddy 同引擎、同记录类型）；IDE：`%LOCALAPPDATA%/CodeBuddyExtension/Data/<uid>/CodeBuddyIDE/<uid>/history/<md5(工作区)>/`，其下 `index.json`（会话列表）+ `<会话 id>/index.json` + `<会话 id>/messages/<消息 id>.json`；消息 `message`/`extra` 为 JSON 字符串，content 片段含 text/reasoning/tool-call/tool-result；工作区路径由 VS Code 的 `workspaceStorage/*/workspace.json` 反查（hash = md5(平台规范化路径)），映射丢失时从首条消息的 `<user_info> Workspace Folder` 兜底 | `~/.codebuddy/skills/`（CLI 与 IDE 共用） |
-| WorkBuddy | 迭代 5 | `~/.workbuddy/projects/<编码路径>/<会话 id>.jsonl` + `workbuddy.db` 元数据（与 CodeBuddy CLI 同引擎） | `~/.workbuddy/skills/` |
+| Claude Code（命令行、VS Code 扩展） | 已支持 | `~/.claude/projects/<编码后的路径>/<会话 id>.jsonl`。JSONL 格式，`uuid` 和 `parentUuid` 构成对话树。默认约 30 天后自动清理 | `~/.claude/skills/` |
+| Qoder（命令行、桌面版） | 已支持 | `~/.qoder/projects/<编码后的路径>/<会话 id>.jsonl`。与 Claude Code 结构相同，另有 `workspace-directories`、`runtime-config`、`active-leaf` 等记录类型 | `~/.qoder/skills/` |
+| Codex（命令行、IDE 扩展、桌面版） | 已支持 | `~/.codex/sessions/YYYY/MM/DD/rollout-*.jsonl`，可能被压缩成 `.jsonl.zst`。`state_*.sqlite` 的 `threads` 表里有标题、cwd、分支 | `~/.agents/skills/`，兼容旧位置 `~/.codex/skills/` |
+| Cursor | 已支持 | 用户数据目录下的 `globalStorage/state.vscdb`（`cursorDiskKV` 表，明文，只读） | 它会读 `~/.cursor/skills`、`~/.agents/skills`、`~/.claude/skills`、`~/.codex/skills`，不用单独放 |
+| Qoder IDE | 已支持 | `~/.qoder/projects/<编码后的路径>/*.jsonl`（IDE transcript 格式） | 与 Qoder 共用 `~/.qoder/skills/` |
+| CodeBuddy | 已支持 | CLI：`~/.codebuddy/projects/<编码路径>/<会话 id>.jsonl`（与 WorkBuddy 同引擎、同记录类型）；IDE：`%LOCALAPPDATA%/CodeBuddyExtension/Data/<uid>/CodeBuddyIDE/<uid>/history/<md5(工作区)>/`，其下 `index.json`（会话列表）+ `<会话 id>/index.json` + `<会话 id>/messages/<消息 id>.json`；消息 `message`/`extra` 为 JSON 字符串，content 片段含 text/reasoning/tool-call/tool-result；工作区路径由 VS Code 的 `workspaceStorage/*/workspace.json` 反查（hash = md5(平台规范化路径)），映射丢失时从首条消息的 `<user_info> Workspace Folder` 兜底 | `~/.codebuddy/skills/`（CLI 与 IDE 共用） |
+| WorkBuddy | 已支持 | `~/.workbuddy/projects/<编码路径>/<会话 id>.jsonl` + `workbuddy.db` 元数据（与 CodeBuddy CLI 同引擎） | `~/.workbuddy/skills/` |
 | Trae / Trae CN | 已支持 | CLI 是 Codex 兼容的 rollout 格式；IDE 会话库加密，由 hook 事件（`hooks_env/memrelay-events`）重建会话 | `~/.trae-cn/skills/`；国际版 `~/.trae/skills/` |
 | Hermes Agent | 留给社区 | `~/.hermes/state.db`（SQLite，有官方文档） | `~/.hermes/skills/` |
 | ZCode | 已支持 | `~/.zcode/cli/db/db.sqlite`（OpenCode 系 SQLite，只读） | `~/.zcode/skills/`（兼容 Claude / Codex Skill） |
@@ -334,6 +334,10 @@ interface Message {
 | `parts_fts`、`parts_cjk_fts` | 全文索引 | 见下文 |
 | `secret_findings` | 检测到的密钥 | 片段位置、规则 id 与版本、遮盖后的预览（不存原文） |
 | `tombstones` | 预留的删除墓碑 | 原始文件路径、原生 id、内容哈希（当前删除以 `filters.json` + `sessions.deleted_at` 为准） |
+| `embeddings`、`embed_queue` | 语义检索向量与回填队列 | 见 `docs/vector-search.md` §5 |
+| `summaries`、`summary_queue` | 会话摘要与生成队列 | 见 `docs/llm-summary.md` |
+| `session_names`、`name_queue` | AI 任务名与生成队列 | 与摘要共用队列原语 |
+| `memory_sources`、`memory_items`、`memory_plan`、`memory_exports` | 跨工具偏好整理 | 见 `docs/tidy.md` §5 |
 | `settings` | 配置 | 语义检索 / 会话摘要 / 偏好整理各自独立的接口与开关；排除目录、自动接入开关在 `filters.json` |
 
 - **过长内容**：单个片段超过约 32 KB 时，库里只留开头和结尾各一段，中间换成省略标记。完整内容压缩后放进 `blobs`，按内容哈希去重。
@@ -400,7 +404,7 @@ interface Message {
 | b | 装上面的三件套：实时索引 + 启动提示 | a 触发不稳、并且支持 hooks 的工具：Claude Code、Qoder CLI、Trae CN（事件采集形态）、Codex、CodeBuddy（CLI + IDE）、WorkBuddy、ZCode；OpenCode 是插件形态（回合结束事件里调 `memrelay hook --flavor opencode` 精准索引单会话） |
 | c | 在工具的全局规则文件里加一句话 | a 触发不稳、又不支持 hooks 的工具 |
 
-- 启用方式：`memrelay setup` 在写入计划里**默认包含**需要它的工具的增强。确认一次后生效；`--no-enhance` 可整体跳过，`setup --undo` 外科手术式移除（用户其它配置不动），迭代 4 的界面里再做成逐工具开关。
+- 启用方式：`memrelay setup` 在写入计划里**默认包含**需要它的工具的增强。确认一次后生效；`--no-enhance` 可整体跳过，`setup --undo` 外科手术式移除（用户其它配置不动）；`memrelay ui` 的接入页可以逐工具开启或撤销。
 - 各宿主调用方式的差异（均为实测结论）：
   - Claude Code：hooks 经 **Git Bash（sh）** 执行，命令用 sh 形式（`"$HOME/.memrelay/bin/memrelay" hook 2>/dev/null || true`），不能用 `%USERPROFILE%`。
   - Qoder CLI：事件名与 payload 与 Claude Code 一致，Windows 上用 **exec 形态**直调启动脚本（`{command: "cmd.exe", args: ["/c", <launcher.cmd>, "hook"]}`），不经 shell 解析。
@@ -420,14 +424,14 @@ interface Message {
 
 1. **仪表盘**（默认首页）：状态计数（进行中 / 中断 / 完成 / 放弃 / 未判定，零值也显示）、已删除数量、待接力的中断任务、最近任务、近 14 天活动（悬浮显示当天会话数）、工具与目录分布；状态卡点击进入任务列表并带上对应筛选，已删除卡进入回收站；与任务列表同一套状态与分组口径，每 30 秒静默刷新。
 2. **任务列表**：按项目目录分组、目录可折叠（默认露出前 10 个目录，可继续展开）；组内按最近活动倒序，每目录分页懒加载（滚动到底自动续页），计数与状态每 30 秒静默刷新；服务端同时每 30 秒做一次增量重扫，正在进行、尚未触发 Stop 的回合也能出现在「进行中」。显示状态（进行中 / 中断 / 完成 / 放弃）和最近用过的工具。
-3. **接力时间线**：一个任务跨工具的完整链路。
-4. **原始对话**：按当前分支浏览，可以展开工具调用和被回退的分支；支持全局搜索。
-5. **手动修正**：改任务名；标记完成或放弃，之后它不再出现在续接候选里；拆开或合并接力链。
-6. **续接预览**和"复制续接提示词"。后者给不能运行命令的环境用，比如网页版对话。
-7. **接入管理**：各工具的接入状态、一键接入或撤销、触发自测、新装工具提示。
-8. **隐私**：按目录排除；查看检测到的密钥。
-9. **删除**：可以删除单个会话、整个任务或整个项目的数据，在"已删除"里可以恢复。只删 MemRelay 里的数据，不动原工具的文件。
-10. **配置**：语义检索与会话摘要（各自独立接口，可选）；是否自动接入新工具（默认关）。界面语言与主题在侧栏底部菜单切换（简洁 / 漫画 / 像素 × 浅色 / 深色 / 跟随系统；动效开启 / 关闭 / 跟随系统）。
+3. **任务详情**：竖向接力轨（跨工具链路）、续接预览、一键复制续接提示词；改名、标记完成或放弃、拆分 / 合并接力链。
+4. **会话浏览与搜索**：按当前分支查看原始对话，可展开工具调用与被回退的分支；全文搜索（中文可搜），从命中处高亮跳入。
+5. **整理**：跨工具偏好整理。来源列表、立即整理 / 撤销下发；「已下发的统一偏好」与「待拍板」分卡展示；右侧是运行状态与已下发文件。
+6. **接入管理**：各工具的接入状态、一键接入或撤销、触发自测、新装工具提示。
+7. **隐私**：按目录排除；查看检测到的密钥与遮盖预览。
+8. **已删除**：删除单个会话、整个任务或整个项目的数据，在"已删除"里可以恢复。只删 MemRelay 里的数据，不动原工具的文件。
+9. **配置**：会话摘要、偏好整理、语义检索各自独立接口；是否自动接入新工具（默认关）。
+10. **全局**：界面语言与主题在侧栏底部菜单切换（简洁 / 漫画 / 像素 × 浅色 / 深色 / 跟随系统；动效开启 / 关闭 / 跟随系统）；快速导览的窄屏入口在配置页顶部。
 
 **本地服务**
 
@@ -435,13 +439,13 @@ interface Message {
 - 默认固定端口 `4823`（被占用时退回随机端口）。界面主题、动效与语言保存在浏览器 localStorage（`memrelay-style` / `memrelay-mode` / `memrelay-motion` / `memrelay-lang`），默认简洁 / 浅色 / 动效开启，下次启动优先读取；固定端口保证浏览器 origin 不变，偏好才能跨启动沿用。
 - 启动时生成随机访问令牌，打开浏览器时通过 URL 传入，之后每个请求都要带上。
 - 校验 `Host` 头，只接受 `127.0.0.1` 或 `localhost`，防止 DNS 重绑定。不开放跨域。
-- 接口按资源划分：仪表盘总览、项目、任务、会话与消息（分页）、搜索、续接预览、删除与恢复、接入、配置。
+- 接口按资源划分：仪表盘总览、项目、任务、会话与消息（分页）、搜索、续接预览、删除与恢复、接入、整理、配置、摘要 / 向量的状态与回填。
 - 前端打包后放进 npm 包，由本地服务直接提供。
 - 视觉方向已定稿为三套可切换皮肤（简洁 / 漫画 / 像素，2026-10-22），实现以 `docs/design.md` 与 `design/` 为准。
 
 ### 5.9 偏好与项目知识（全局偏好已实现，2026-10-23）
 
-首版已实现**全局偏好**的导入、合并与下发（见 `docs/tidy.md`）：来源为 Qoder memory、Codex `AGENTS.md`、Trae CN 用户画像、Claude Code `CLAUDE.md`；由独立接口的整理模型合并，写入各工具规则文件的 MemRelay 标记块，可撤销。项目知识沿用同一套数据模型，后续接入。
+首版已实现**全局偏好**的导入、合并与下发（见 `docs/tidy.md`）。来源覆盖 Qoder memory、Codex / Trae CN / Claude Code / ZCode / OpenCode / DeepSeek Harness 的全局规则，以及 WorkBuddy 的全局记忆；由独立接口的整理模型合并，写入 9 个下发位置（各工具规则文件里的 MemRelay 标记块或独立记忆文件），可撤销。Cursor 的全局规则存在设置数据库里，首版不纳入。项目知识沿用同一套数据模型，后续接入。
 
 1. **导入**：以只读方式导入各工具的记忆和规则文件，放进"待整理"列表。比如 Qoder、Claude Code 的记忆目录，Codex、Trae 的记忆文件。
 2. **整理**：交给整理的对话模型去重、找出矛盾、给出建议（首版由 MemRelay 调独立接口；架构原设想由宿主 agent 用自己的模型）。
@@ -460,10 +464,13 @@ interface Message {
 | `memrelay show <会话 id> [--from N]` | agent | 分页查看原始记录 | 1 |
 | `memrelay search <关键词>` | agent | 在当前项目的会话里搜索 | 2 |
 | `memrelay hint` | hook | 输出一行未完成任务的提示 | 2（按需） |
-| `memrelay hook` | hook | 从 stdin 读宿主事件的 JSON：Stop / SessionEnd 按 `transcript_path` 增量索引那一个会话文件；SessionStart 补扫变更并输出提示。静默、幂等、永不阻塞宿主 | 3 |
+| `memrelay hook [--flavor dsh|opencode]` | hook | 从 stdin 读宿主事件的 JSON：Stop / SessionEnd 按 `transcript_path` 增量索引那一个会话文件；SessionStart 补扫变更并输出提示。静默、幂等、永不阻塞宿主 | 3 |
 | `memrelay setup [--undo] [--purge]` | 用户 | 接入或撤销 | 1 |
 | `memrelay doctor` | 用户 | 自检：各工具的会话能否解析（只输出统计数字）、中文输出是否正常、Node 和启动脚本的路径是否有效 | 1 |
 | `memrelay ui [--port N]` | 用户 | 打开管理界面（默认固定端口 4823，主题/语言偏好随 origin 留在浏览器） | 4 |
+| `memrelay embed [--status]` | 用户 | 向量回填：把正文嵌入并写入 `embeddings`；`--status` 查看队列与进度 | 增强 |
+| `memrelay summarize [--status]` | 用户 | 生成会话摘要；`--status` 查看队列与进度 | 增强 |
+| `memrelay tidy [--status\|--apply\|--undo]` | 用户 | 跨工具偏好整理、下发与撤销 | 增强 |
 | `memrelay ping` | setup 自测 | 打印固定标记和版本号 | 1 |
 | `memrelay`（不带参数） | 所有人 | 打印帮助；还没接入时，提示运行 setup | 1 |
 
@@ -507,33 +514,31 @@ memrelay/                            仓库是 pnpm workspace；发布物只有 
 │  │  ├─ src/
 │  │  │  ├─ cli/                    命令分发；commands/ 下每个用户命令一个文件
 │  │  │  ├─ core/                   统一模型、项目识别、中文切分、token 估算、密钥规则
-│  │  │  ├─ adapters/
-│  │  │  │  ├─ jsonl-family/        记录模型、解析工具与 JSONL 适配器基类
-│  │  │  │  ├─ claude-code/
-│  │  │  │  ├─ qoder/               复用 claude-code 的解析，另外处理额外的记录类型
-│  │  │  │  └─ codex/ …
+│  │  │  ├─ adapters/                每个工具一个适配器：jsonl-family（基类）、claude-code、qoder、
+│  │  │  │                          codex、cursor、codebuddy、workbuddy、opencode-family、trae-events、dsh 等
 │  │  │  ├─ resume/                 选会话、判断状态、提炼、渲染、接力链、hint 引擎
-│  │  │  ├─ store/                  SQLite、迁移、索引器、全文索引
-│  │  │  ├─ integrations/           工具清单、Skill 模板、启动脚本、setup 与撤销、hook 入口
+│  │  │  ├─ store/                  SQLite、迁移、索引器、全文索引、向量与摘要队列
+│  │  │  ├─ integrations/           工具清单、Skill 模板、启动脚本、setup 与撤销、hook 入口、偏好整理
 │  │  │  └─ server/                 本地服务接口
+│  │  ├─ dsh-plugin/                DeepSeek Harness 进程内插件（随 npm 包发布）
 │  │  ├─ test/                      fixtures/ golden/ e2e/ manual/（手工验收） bench/
-│  │  └─ dist/                      构建产物（含界面 dist/ui；npm 包只带 bin + dist）
+│  │  └─ dist/                      构建产物（含界面 dist/ui；npm 包只带 bin + dist + dsh-plugin）
 │  └─ ui/                           管理界面（React；产物构建进 packages/cli/dist/ui）
-├─ docs/                            长期设计文档（architecture.md、design.md）
-└─ .github/  README.md  LICENSE
+├─ docs/                            architecture.md、design.md、tidy.md、vector-search.md、llm-summary.md
+└─ .github/  README.md（11 种语言）  LICENSE
 ```
 
 | 方面 | 选择 |
 |---|---|
 | 语言 | TypeScript（strict 模式） |
-| 包管理 | pnpm |
+| 包管理 | pnpm workspace |
 | 命令行打包 | tsdown，打成单个 `dist/cli.mjs`，依赖全部内联 |
-| 管理界面 | React 19 + Vite + Tailwind CSS v4 + shadcn/ui + Motion，构建进 `packages/cli/dist/ui`（先 tsdown 后界面构建；tsdown 只清 `dist/cli.mjs`，不碰 `dist/ui`） |
-| 本地服务 | Node 自带的 `http`，加一个轻量路由（比如 Hono），和命令行一起打包 |
-| 数据库 | `node:sqlite` |
+| 管理界面 | React 19 + React Router + Vite + Tailwind CSS v4 + Motion；自建组件与设计令牌，不依赖组件库。构建进 `packages/cli/dist/ui`（先 tsdown 后界面构建；tsdown 只清 `dist/cli.mjs`，不碰 `dist/ui`） |
+| 本地服务 | Node 自带的 `node:http` 加自建轻量路由，和命令行一起打包 |
+| 数据库 | `node:sqlite`（FTS5 从 Node 22.16 起可用） |
 | 测试 | Vitest |
-| CI 与发布 | GitHub Actions：三个平台跑测试；打 tag 后发布到 npm，附带 provenance |
-| `package.json` | `packages/cli` 的 `engines.node` 为 `>=22.16`；`bin.memrelay` 指向 `bin/memrelay.cjs`；`files` 包含 `bin`、`dist`、`dsh-plugin` |
+| CI 与发布 | GitHub Actions：三平台 × Node 22.16 / 22 最新 / 24 跑测试，另跑入口程序 e2e；打 tag 后发布到 npm，附带 provenance |
+| `package.json` | `packages/cli` 的 `engines.node` 为 `>=22.16`；`bin.memrelay` 指向 `bin/memrelay.cjs`；`files` 包含 `bin`、`dist`、`dsh-plugin`；`repository` / `homepage` / `bugs` 指向 GitHub 仓库 |
 
 ## 10. 测试策略
 
@@ -548,15 +553,11 @@ memrelay/                            仓库是 pnpm workspace；发布物只有 
 - **续接输出**：和标准答案文件比对，覆盖单个会话、多次接力、候选菜单、超出预算时的裁剪。
 - **实时索引与快路径**：hook 的 Stop / SessionEnd 单文件索引、SessionStart 补扫与提示、静默契约（坏 payload、未知事件不报错）、半截文件容错；查库快路径与读文件路径的排序等价性（同一批会话两条路径逐项一致）；候选来自库（保持 size+mtime 不变的同尺寸改写也按库续接）、过期文件现场重读、新会话补进候选、库缺失降级；两条宿主调用链（sh 形式与 exec 形式）的手工验收。
 - **端到端**：用临时目录伪造 `HOME`、`USERPROFILE`、`MEMRELAY_HOME`，放进样例，然后调用打包后的命令。
-- **环境矩阵**（GitHub Actions），覆盖以下维度：
+- **CI 环境矩阵**（GitHub Actions，每次 push / PR）：
   - 系统：Windows、macOS、Linux
-  - Node：22.16、22 最新版、24；另外测"当前生效的是 Node 18、电脑上另有 24"时，入口程序能不能自动切换
-  - 安装方式：官方安装包、nvm 或 nvm-windows、volta、fnm、pnpm 全局安装
-  - 终端：PowerShell 5.1、pwsh、cmd、Git Bash、bash、zsh
-  - 主目录：带空格、带中文
-  - 参数：带 `&`、引号等特殊字符
-
-  每个组合都先跑 setup，再用各种终端调用 Skill 里的命令，检查输出是否正确。
+  - Node：22.16（最低版）、22 最新版、24
+  - 每个组合都跑 `pnpm typecheck`、`pnpm build`、`pnpm test`；另外在 Windows / Ubuntu 上跑入口程序 e2e（正常启动、runtime.json 失效回退、包缺失提示）
+- **手工验收**（不进 CI）：不同的 Node 安装方式（官方包、nvm、volta、fnm、pnpm 全局）、终端（PowerShell 5.1、pwsh、cmd、Git Bash、bash、zsh）、带空格或中文的主目录、带 `&` / 引号的参数，以及各接手工具的触发测试表。
 - **本机检查**：`memrelay doctor` 解析本机的真实会话，只输出统计数字，不输出内容。工具升级改了格式时，能及早发现。
 - **触发测试表**（手工验收）：在每个接手工具里，用几种说法测 Skill 会不会触发，比如"继续完成 XX 任务""继续""接着做"。记录结果，决定要不要启用 b 或 c。
 
@@ -564,7 +565,7 @@ memrelay/                            仓库是 pnpm workspace；发布物只有 
 
 每个迭代结束时，都能单独使用。
 
-### 迭代 1：一句话续接（从 Qoder、Claude Code 切到任意工具）
+### 迭代 1：一句话续接（从 Qoder、Claude Code 切到任意工具）（已完成）
 
 1. 工程骨架：pnpm、TypeScript、Vitest、tsdown；入口程序；`memrelay`、`ping` 和帮助信息
 2. 统一模型与文本工具：中文切分、token 估算、密钥遮盖
@@ -587,7 +588,7 @@ memrelay/                            仓库是 pnpm workspace；发布物只有 
 - 三个平台的 CI 全部通过。
 - 完成触发测试表。
 
-### 迭代 2：Codex、数据库、搜索
+### 迭代 2：Codex、数据库、搜索（已完成）
 
 - Codex 适配器，包括 `.jsonl.zst`
 - 存储与增量索引、中文全文索引
@@ -611,13 +612,13 @@ memrelay/                            仓库是 pnpm workspace；发布物只有 
 - 35 个会话的项目上 `resume` 进入 0.3 秒量级。
 - 老流程（没装 hook 的工具、没有索引库）一切照旧。
 
-### 迭代 4：管理界面
+### 迭代 4：管理界面（已完成 2026-10-22）
 
 实现 5.8 的全部页面。开工前，先用 frontend-design 确定视觉方向。
 
 验收标准：所有页面功能可用；删除后能恢复；访问令牌和 Host 校验都有测试。
 
-### 迭代 5：更多来源与更多 hook
+### 迭代 5：更多来源与更多 hook（已完成）
 
 - Cursor、Qoder IDE、WorkBuddy 的适配器
 - Trae：CLI 明文会话的适配器 + IDE 侧用 hook payload 采集会话（IDE 会话库加密，研究结论见开发记录）
@@ -627,7 +628,7 @@ memrelay/                            仓库是 pnpm workspace；发布物只有 
 Cursor 会自动导入 `~/.claude/settings.json` 的 hooks（第三方兼容，默认开），不额外安装、维持扫盘兜底
 - dsh 实时索引走进程内插件：memrelay 包内置 `memrelay-dsh-plugin`，挂载在 memrelay 已有的 home 级 `cordis.patch.yml` 块里（`file://` 直指插件入口，`setup --undo` 随块撤销）——不碰 dsh 的 profile 依赖（桌面端 profile 归 Electron 应用独占，`dsh plugin add` 装不进去）。插件在 harness 进程内订阅 `agent/turn-stopping` / `agent/created` 并派生 `memrelay hook --flavor dsh`；hooks 桥保留作启动提示与兼容——它的命令经 dsh 的 ACL 沙箱受限通道执行，受限子进程存在已知初始化缺陷（0xC0000142）且受限令牌只能写工作区，进程内插件不受这两条限制
 
-### 迭代 6：CodeBuddy（CLI + IDE）
+### 迭代 6：CodeBuddy（CLI + IDE）（已完成）
 
 - CLI 与 WorkBuddy 同引擎，复用同一套 JSONL 解析（`adapters/codebuddy/cli.ts` 的工厂同时供 WorkBuddy 使用）
 - IDE 历史按 `<history>/<工作区 md5>/<会话 id>/{index.json,messages/*.json}` 解析（旧的 `genie-history/<base64 工作区>/conversations/` 布局也兼容）；tool-call / tool-result / reasoning 从消息 content 片段归一化，标题与时间取工作区 `index.json`；消息时间兼认 `createdAt` 与 `createTime`
@@ -653,20 +654,20 @@ Cursor 会自动导入 `~/.claude/settings.json` 的 hooks（第三方兼容，�
 | 风险或待验证事项 | 应对 | 何时验证 |
 |---|---|---|
 | 各工具的会话格式没有公开文档，升级后可能变化 | 每个工具一个适配器；适配器版本一变就重新解析；doctor 自检时做解析完整性检查（原始记录多、解析出的消息极少就报警，能发现"不报错但内容丢了"）；不认识的记录保留下来 | 持续 |
-| 各工具对 Skill 的触发效果不同 | 触发测试表，加上 b、c 两层补救 | 迭代 1 |
-| 识别接手工具自己的当前会话，以便排除 | 按"最后一条是 memrelay 调用"来识别；样例覆盖各工具写入记录的时机 | 迭代 1 |
-| 旧 agent 还在运行，两边同时改文件 | 检测最近的写入时间，发现可疑就先问用户 | 迭代 1 |
-| Cursor 从多个目录读取 Skill，可能显示两份同名 Skill | 两份内容相同；如果有问题，改为只写一个目录 | 迭代 1 |
-| PowerShell 5.1 + GBK 下中文乱码 | 首行中文标记，加上 `--out` | 迭代 1 |
-| 在沙箱里以只读方式打开 WAL 模式的 SQLite | 实测；如果不行，`resume` 只读 `filters.json`，不碰数据库 | 迭代 2 |
-| Codex 的 `.jsonl.zst` 需要 zstd 解压（Node 22.16 起自带，待确认） | 在较低版本上跳过这类文件并给出提示 | 迭代 2 |
-| Codex 的 hooks 在 Windows 上能否使用；Cursor 开局注入的已知 bug；Trae 的 hooks 在 SOLO 模式下是否生效 | 实测后决定这些工具能否用 b 层。结论：Codex 已接入（Windows 经 PowerShell，`commandWindows` 字段给 Windows 专用命令；未信任的 hook 不跑，setup 预置 `hooks.state.trusted_hash` 后无需手动放行）；Cursor 会自动导入 `~/.claude/settings.json` 的 hooks，不另装；Trae 官方文档确认 hooks 适用于所有模式（含 SOLO/对话），但要求 `version: 1` 且在 设置 > Hooks 里启用——此前只做了手工模拟，真实 UI 触发待启用后复测 | 迭代 2 → 迭代 5 已定 |
-| Cursor 的记录缺少工具输出，IDE 和命令行分开存储 | 适配器分别处理；缺失的部分在续接内容里注明 | 迭代 4 |
-| Claude Code 默认约 30 天后清理旧会话 | 及时归档到 `memrelay.db` | 迭代 2 |
-| hook 在各工具里是否真正触发、stdout 是否注入上下文 | 两个宿主（Claude Code / Qoder CLI）的调用链已在本机按真实方式实测；即使 hook 不生效，resume 会现场重读变更文件，功能零缺失 | 迭代 3 |
-| hook 与用户命令并发写库（SQLITE_BUSY） | 写入方设 busy_timeout 排队；hook 失败静默，下一次 SessionStart 补扫兜住 | 迭代 3 |
-| 宿主给的 `transcript_path` 与扫盘路径大小写/分隔符不一致（Windows） | hook 先取磁盘真实路径再索引，保证同一文件只有一行来源记录 | 迭代 3 |
-| hook 每回合结束都要写库，大文件会话会拖慢宿主 | 单文件索引目前整文件重读（2MB 会话约 0.2-0.4s，已设 hook 超时且失败静默）；后续可按 `last_offset` 只解析新增部分 | 迭代 5 |
+| 各工具对 Skill 的触发效果不同 | 触发测试表，加上 b、c 两层补救 | 迭代 5 已验收 |
+| 识别接手工具自己的当前会话，以便排除 | 按"最后一条是 memrelay 调用"来识别；样例覆盖各工具写入记录的时机 | 已验收 |
+| 旧 agent 还在运行，两边同时改文件 | 检测最近的写入时间，发现可疑就先问用户 | 已验收 |
+| Cursor 从多个目录读取 Skill，可能显示两份同名 Skill | 两份内容相同；如果有问题，改为只写一个目录 | 已验收 |
+| PowerShell 5.1 + GBK 下中文乱码 | 首行中文标记，加上 `--out` | 已验收 |
+| 在沙箱里以只读方式打开 WAL 模式的 SQLite | 实测可用；`resume` / `show` / `search` 以只读方式打开数据库 | 已验收 |
+| Codex 的 `.jsonl.zst` 需要 zstd 解压（Node 22.15+ 自带 zstd；`node:sqlite` 的 FTS5 从 22.16 起） | 入口程序把最低版本卡在 22.16；低版本直接给出升级说明。dsh 的多帧 zstd 同时兼容新旧 Node 的解压行为 | 已验收（2026-11-02） |
+| Codex 的 hooks 在 Windows 上能否使用；Cursor 开局注入的已知 bug；Trae 的 hooks 在 SOLO 模式下是否生效 | 实测后决定这些工具能否用 b 层。结论：Codex 已接入（Windows 经 PowerShell，`commandWindows` 字段给 Windows 专用命令；未信任的 hook 不跑，setup 预置 `hooks.state.trusted_hash` 后无需手动放行）；Cursor 会自动导入 `~/.claude/settings.json` 的 hooks，不另装；Trae 官方文档确认 hooks 适用于所有模式（含 SOLO/对话），但要求 `version: 1` 且在 设置 > Hooks 里启用 | 迭代 5 已验收 |
+| Cursor 的记录缺少工具输出，IDE 和命令行分开存储 | 适配器分别处理；缺失的部分在续接内容里注明 | 已验收 |
+| Claude Code 默认约 30 天后清理旧会话 | 及时归档到 `memrelay.db` | 已验收 |
+| hook 在各工具里是否真正触发、stdout 是否注入上下文 | 两个宿主（Claude Code / Qoder CLI）的调用链已在本机按真实方式实测；即使 hook 不生效，resume 会现场重读变更文件，功能零缺失 | 迭代 3 已验收 |
+| hook 与用户命令并发写库（SQLITE_BUSY） | 写入方设 busy_timeout 排队；hook 失败静默，下一次 SessionStart 补扫兜住 | 迭代 3 已验收 |
+| 宿主给的 `transcript_path` 与扫盘路径大小写/分隔符不一致（Windows） | hook 先取磁盘真实路径再索引，保证同一文件只有一行来源记录 | 迭代 3 已验收 |
+| hook 每回合结束都要写库，大文件会话会拖慢宿主 | 单文件索引目前整文件重读（2MB 会话约 0.2-0.4s，已设 hook 超时且失败静默）；后续可按 `last_offset` 只解析新增部分 | 迭代 5 已验收 |
 
 ## 14. 关键决策
 
@@ -676,7 +677,7 @@ Cursor 会自动导入 `~/.claude/settings.json` 的 hooks（第三方兼容，�
 | 新 agent 怎么调用 | 全局命令，加上自动分发的 Skill | 不用在每个工具里装 MCP；命令是只读的，在沙箱里也能跑；新工具开箱即用 | MCP 服务；全局规则文件 |
 | 怎么接入 | 安装后运行一次 `memrelay setup` | 用户看得到改了什么，可以撤销；在所有包管理器下表现一致 | npm 安装脚本：输出会被隐藏，pnpm 和 bun 默认不执行，没有卸载钩子，还会被安全扫描标红 |
 | 续接内容怎么生成 | 按规则提炼，大模型只作可选项 | 不需要 API Key；结果可测试、可预期 | 必须配大模型；只给最后 N 轮对话 |
-| 怎么找到对应的任务 | 当前项目 + 时间 + 关键词 + 改过的文件，生成候选菜单，再由 agent 判断 | 接手的 agent 本身就是大模型；向量检索要下载模型，在沙箱里断网，启动也慢 | 只用关键词或只用向量；关键词加向量的混合检索 |
+| 怎么找到对应的任务 | 当前项目 + 时间 + 关键词 + 改过的文件，生成候选菜单，由 agent 判断；可选远程向量通道参与融合 | 默认零网络、零 API Key；向量只作为 opt-in 增强，失败静默回退 | 只用关键词；只依赖向量（沙箱断网、启动慢） |
 | 存储 | 自建 SQLite，表结构向 AgentsView 看齐 | 能打包进 npm 包；有片段这一层；能归档原工具已清理的会话 | 直接用 AgentsView（Go 写的，60 多张表，没有片段层）；不建库 |
 | `resume` 是否依赖数据库 | 优先查库（快路径）：候选文件做 size+mtime 校验，变了就现场重读那一个；库缺失或大面积过期时全量扫盘兜底 | 要毫秒级拿到候选，又不能让过期索引给出错进度；两条路径输出口径一致（有等价性测试） | 完全依赖库（过期就错）；完全扫盘（每次整读所有会话文件） |
 | 怎么保证任何环境都能运行 | 固定位置的启动脚本，按终端给出命令，装完当场自测 | 写死的路径在不同的 Node 安装方式、终端和编码下会失效 | 在 Skill 里写死绝对路径；依赖 PATH |

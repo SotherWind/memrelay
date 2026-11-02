@@ -141,7 +141,7 @@ CREATE TABLE IF NOT EXISTS summary_queue (
 | `store/embeddings-store.ts` | 迁移到公共原语（行为不变、测试保证） |
 | `core/llm.ts`（新） | OpenAI 兼容 `/chat/completions` 客户端（超时、429 退避、失败即抛） |
 | `store/summaries-store.ts`（新） | 表读写、入队、drain（照搬同款模式）、状态 / 清除 / 重建、素材组装与脱敏、按会话取数 |
-| `store/schema.ts` | v5：summaries + summary_queue |
+| `store/schema.ts` | schema v1：summaries + summary_queue（开发期曾按 v5 记录，0.1.0 统一并入 v1） |
 | `store/indexer.ts` | 会话索引完成 → 入队 |
 | `resume/command.ts` + `resume/render.ts` | 定向生成（选定后 ≤1 会话 / ≤6s）+ `## 任务摘要（AI 生成）` 段 |
 | `resume/menu.ts` | 候选项摘要行（传入 map） |
