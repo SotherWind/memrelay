@@ -60,9 +60,9 @@ MemRelay membaca catatan sesi yang disimpan setiap alat di komputer Anda dan, sa
 - **Tanpa kerja sama dari agen lama** — tidak meminta apa pun dari alat lama; membaca catatan sesi lokalnya dan merangkum progres, sisa pekerjaan, serta langkah berikutnya.
 - **Sekali pasang, lalu bicara seperti biasa** — setelah `memrelay setup` Anda tidak perlu menyebut memrelay; di alat yang memiliki Skill atau petunjuk mulai, «lanjutkan tugas XX» terpicu otomatis.
 - **Progres tetap terkini** — dengan persetujuan Anda, ia terpasang di hooks alat; progres masuk ke indeks lokal hampir real-time dan alat berikutnya bisa langsung melanjutkan.
-- **Alat utama tercakup** — membaca sesi Claude Code, Qoder, Codex, Cursor, CodeBuddy, WorkBuddy, OpenCode, ZCode, Trae, dan DeepSeek Harness (Trae dan CodeBuddy dalam format CLI dan IDE).
+- **Alat utama tercakup** — membaca sesi Claude Code, Qoder, Codex, Cursor, CodeBuddy, WorkBuddy, OpenCode, ZCode, Trae / Trae CN, dan DeepSeek Harness (Trae CN dan CodeBuddy dalam format CLI dan IDE).
 - **Tanpa LLM** — materi serah-terima diekstrak lokal dengan aturan; offline secara default dan tanpa API key; pencarian semantik vektor, ringkasan sesi, dan penataan preferensi adalah peningkatan opsional opt-in (lihat di bawah).
-- **Lokal dulu dan bisa dibatalkan** — data hanya di `~/.memrelay/`, tanpa telemetri; alat lain hanya dibaca, setiap penulisan tercatat di manifes dan bisa dibatalkan.
+- **Lokal dulu dan bisa dibatalkan** — data hanya di `~/.memrelay/`, tanpa telemetri; sesi alat lain hanya dibaca, dan setiap penulisan integrasi atau penataan preferensi tercatat di manifes serta bisa dibatalkan.
 
 ## Instalasi
 
@@ -127,7 +127,7 @@ Sesi dibaca langsung — alat sumber tidak perlu melakukan apa pun:
 | WorkBuddy | `~/.workbuddy/projects/…/*.jsonl` + metadata `workbuddy.db` |
 | OpenCode | `~/.local/share/opencode/opencode.db` |
 | ZCode | `~/.zcode/cli/db/db.sqlite` |
-| Trae / Trae CN | CLI memakai format kompatibel Codex; penyimpanan sesi IDE terenkripsi dan direkonstruksi dari event hook |
+| Trae / Trae CN | CLI Trae memakai format kompatibel Codex; penyimpanan sesi IDE Trae CN terenkripsi dan direkonstruksi dari event hook (Trae internasional: hanya CLI) |
 | DeepSeek Harness | `~/.dsh/sessions/<encoded-project-dir>/session-<id>/session.v4.jsonl.zstd` (zstd multi-frame, hanya-baca) |
 
 > [!NOTE]
@@ -138,7 +138,7 @@ Integrasi punya dua lapis, semuanya tercatat di manifes dan bisa dibatalkan: **S
 ## Batasan yang diketahui
 
 - **Pemicuan otomatis bergantung pada Skill atau petunjuk mulai**: OpenCode saat ini hanya memiliki plugin indeks real-time, tanpa petunjuk mulai, jadi jalankan `memrelay resume` secara manual di sana.
-- **Penyimpanan sesi IDE Trae terenkripsi**: sesi hanya direkonstruksi dari event hook saat indeks real-time aktif; jika hanya Skill yang aktif dan indeks real-time tidak, sesi lama tidak dapat dibaca.
+- **Penyimpanan sesi IDE Trae CN terenkripsi**: sesi hanya direkonstruksi dari event hook saat indeks real-time aktif; jika hanya Skill yang aktif dan indeks real-time tidak, sesi lama tidak dapat dibaca.
 - **Hanya sesi lokal**: tidak ada sinkronisasi antar mesin; alat yang tidak didukung, atau sesi terenkripsi tanpa aliran event, tidak dapat dibaca.
 
 ## Antarmuka web
@@ -152,6 +152,8 @@ Membuka antarmuka lokal yang hanya mendengarkan di `127.0.0.1` (token sekali pak
 - **Dasbor**: ringkasan status, tugas siap dilanjutkan, tugas terbaru, aktivitas 14 hari terakhir, dan distribusi alat/folder
 - **Daftar tugas**: rantai relai antar alat digabung menjadi satu tugas; dikelompokkan per folder dan diurutkan berdasarkan aktivitas terbaru, dengan status real-time
 - **Detail tugas**: jalur relai vertikal + pratinjau serah-terima + salin prompt serah-terima sekali klik
+- **Penataan**: penataan preferensi antar-alat; kartu terpisah untuk yang sudah diterapkan dan yang menunggu keputusan, bisa dibatalkan
+- **Pengaturan**: antarmuka dan sakelar untuk ringkasan, penataan, dan pencarian semantik, integrasi otomatis alat baru, serta status proses
 - **Tiga skin**: minimal / komik / piksel × terang / gelap / sistem; pilihan tema dan bahasa diingat
 - **11 bahasa antarmuka**: Mandarin sederhana / English / Mandarin tradisional / 日本語 / 한국어 / Español / Français / Deutsch / فارسی / Português (BR) / Bahasa Indonesia
 - **Penjelajahan & pencarian sesi**: pencarian teks lengkap (termasuk CJK), melompat ke kecocokan dengan sorotan
@@ -163,18 +165,18 @@ Pencarian semantik, ringkasan sesi, dan penataan preferensi nonaktif secara defa
 
 - **Pencarian semantik**: menambah kanal semantik sehingga mencari «halaman login» juga menemukan sesi yang menulis "auth page". Hanya teks user/assistant yang di-embed, dan hanya `/embeddings` jarak jauh yang kompatibel dengan OpenAI yang didukung. Referensi skala: ~250 sesi ≈ 2 juta karakter ≈ US$0,03. Konten yang tidak berubah dilewati lewat rekonsiliasi hash; saat berganti model/host, tersedia pembangunan ulang sekali klik. [Desain](docs/vector-search.md)
 - **Ringkasan sesi**: membuat ringkasan progres 2–4 kalimat per sesi, ditampilkan di keluaran relai (`## 任务摘要（AI 生成）`), daftar & detail tugas, dan penjelajahan sesi. Materi dibatasi pada judul, sinyal status, dan ~20 pesan terakhir di ujung sesi (≤8KB); penalaran dan keluaran alat tidak dikirim. ~1 juta token untuk 250 sesi. Materi yang tidak berubah dilewati; saat berganti model/host, tersedia pembangunan ulang sekali klik. [Desain](docs/llm-summary.md)
-- **Penataan preferensi**: mengimpor memori/aturan global tiap alat secara hanya-baca, menggabungkan duplikat dan konflik, lalu menulis balik blok penanda MemRelay. Hanya menyentuh blok penanda, membuat cadangan sebelum menulis, bisa dibatalkan, dan menampilkan konflik alih-alih menyelesaikannya otomatis; perubahan sumber diperiksa otomatis saat `memrelay ui` berjalan. [Desain](docs/tidy.md)
+- **Penataan preferensi**: mengimpor memori/aturan global tiap alat secara hanya-baca, menggabungkan duplikat dan konflik, lalu menulis balik blok penanda MemRelay. Hanya menyentuh blok penanda atau file khusus, membuat cadangan sebelum menulis, bisa dibatalkan, dan menampilkan konflik alih-alih menyelesaikannya otomatis; perubahan sumber diperiksa otomatis saat `memrelay ui` berjalan. [Desain](docs/tidy.md)
 
 Pemeliharaan: `memrelay embed` / `memrelay summarize` / `memrelay tidy` untuk pengisian penuh (bisa dihentikan dan dilanjutkan); `memrelay ui` mengisi/memeriksa di latar belakang saat berjalan.
 
 ## Privasi dan keamanan
 
 - Data hanya berada di `~/.memrelay/` di mesin Anda; tanpa telemetri; tanpa layanan cloud secara default.
-- File alat lain hanya dibaca; penulisan terbatas pada konfigurasi Skill / hooks dan `~/.memrelay/`, semuanya tercatat di manifes dan bisa dibatalkan.
+- Sesi alat lain hanya dibaca; penulisan terbatas pada integrasi yang Anda setujui (Skill, konfigurasi hooks / plugin), blok penanda MemRelay atau file khusus yang ditulis oleh penataan preferensi, dan `~/.memrelay/`; semuanya tercatat di manifes dan bisa dibatalkan.
 - Kunci (API key, token, kunci privat, string koneksi) dideteksi dan disamarkan sebelum indeks dan keluaran.
 - Saat pencarian semantik, ringkasan sesi, atau penataan preferensi aktif, teks/memori terkait (kunci sudah disamarkan) dikirim ke host yang Anda konfigurasi (ketiganya punya endpoint sendiri); ketiganya nonaktif secara default.
 - Server antarmuka hanya mendengarkan di `127.0.0.1`, memerlukan token akses dan memvalidasi header Host; permintaan tulis juga menolak Origin lintas asal.
-- Hook IDE Trae berjalan di sandbox Trae sendiri dan hanya bisa menaruh event mentah di `hooks_env` Trae; kunci umum (`sk-`, token GitHub, kunci AWS, field `password/token`) disamarkan dulu di dalam sandbox, tetapi konten di luar aturan tersebut bisa tetap ada di salinan itu. Membatalkan integrasi akan menghapus file tersebut. Jika ini penting bagi Anda, aktifkan hanya Skill Trae dan lewati indeks real-time.
+- Hook IDE Trae CN berjalan di sandbox Trae sendiri dan hanya bisa menaruh event mentah di `hooks_env` Trae; kunci umum (`sk-`, token GitHub, kunci AWS, field `password/token`) disamarkan dulu di dalam sandbox, tetapi konten di luar aturan tersebut bisa tetap ada di salinan itu. Membatalkan integrasi akan menghapus file tersebut. Jika ini penting bagi Anda, aktifkan hanya Skill Trae CN dan lewati indeks real-time.
 
 ## Pengembangan
 

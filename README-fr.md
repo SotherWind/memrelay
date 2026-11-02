@@ -60,9 +60,9 @@ MemRelay lit les journaux de session que chaque outil conserve en local et, au m
 - **Zéro coopération de l'ancien agent** — aucun prérequis pour l'ancien outil ; lecture directe de son journal de session local et distillation de l'avancement, des tâches restantes et des prochaines étapes.
 - **Une seule installation, puis parlez normalement** — après `memrelay setup`, inutile de mentionner memrelay ; dans les outils dotés d'un Skill ou d'une indication de démarrage, « continue la tâche XX » le déclenche automatiquement.
 - **L'avancement suit tout seul** — avec votre accord, il s'installe dans les hooks des outils ; l'avancement arrive dans l'index local en quasi-temps réel et l'outil suivant reprend immédiatement.
-- **Les principaux outils couverts** — lit les sessions de Claude Code, Qoder, Codex, Cursor, CodeBuddy, WorkBuddy, OpenCode, ZCode, Trae et DeepSeek Harness (Trae et CodeBuddy en formats CLI et IDE).
+- **Les principaux outils couverts** — lit les sessions de Claude Code, Qoder, Codex, Cursor, CodeBuddy, WorkBuddy, OpenCode, ZCode, Trae / Trae CN et DeepSeek Harness (Trae CN et CodeBuddy en formats CLI et IDE).
 - **Sans LLM** — la passation est distillée localement par règles ; hors ligne par défaut, sans clé API ; la recherche sémantique vectorielle, les résumés de session et l'organisation des préférences sont des améliorations optionnelles opt-in (voir ci-dessous).
-- **Local d'abord, réversible** — les données restent dans `~/.memrelay/`, sans télémétrie ; les autres outils sont en lecture seule, chaque écriture est consignée dans un manifeste et annulable.
+- **Local d'abord, réversible** — les données restent dans `~/.memrelay/`, sans télémétrie ; les sessions des autres outils sont en lecture seule, et chaque écriture d'intégration ou d'organisation des préférences est consignée dans un manifeste et annulable.
 
 ## Installation
 
@@ -127,7 +127,7 @@ Les sessions sont lues directement — l'outil source n'a rien à faire :
 | WorkBuddy | `~/.workbuddy/projects/…/*.jsonl` + métadonnées `workbuddy.db` |
 | OpenCode | `~/.local/share/opencode/opencode.db` |
 | ZCode | `~/.zcode/cli/db/db.sqlite` |
-| Trae / Trae CN | La CLI utilise un format compatible Codex ; le stockage de sessions de l'IDE est chiffré et reconstruit à partir des événements de hook |
+| Trae / Trae CN | La CLI de Trae utilise un format compatible Codex ; le stockage de sessions de l'IDE Trae CN est chiffré et reconstruit à partir des événements de hook (Trae international : CLI uniquement) |
 | DeepSeek Harness | `~/.dsh/sessions/<encoded-project-dir>/session-<id>/session.v4.jsonl.zstd` (zstd multiframe, lecture seule) |
 
 > [!NOTE]
@@ -138,7 +138,7 @@ L'intégration a deux couches, toutes consignées et annulables : **Skill** (app
 ## Limites connues
 
 - **Le déclenchement automatique dépend d'un Skill ou d'une indication de démarrage** : OpenCode ne dispose actuellement que du plugin d'indexation en temps réel, sans indication de démarrage ; il faut donc y lancer `memrelay resume` manuellement.
-- **Le stockage de sessions de l'IDE Trae est chiffré** : il n'est reconstruit à partir des événements de hook que lorsque l'indexation en temps réel est activée ; avec seulement le Skill et sans indexation en temps réel, ses sessions passées sont illisibles.
+- **Le stockage de sessions de l'IDE Trae CN est chiffré** : il n'est reconstruit à partir des événements de hook que lorsque l'indexation en temps réel est activée ; avec seulement le Skill et sans indexation en temps réel, ses sessions passées sont illisibles.
 - **Sessions locales uniquement** : aucune synchronisation entre machines ; les outils non pris en charge, ou les sessions chiffrées sans flux d'événements, ne peuvent pas être lus.
 
 ## Interface web
@@ -152,6 +152,8 @@ Ouvre une interface locale qui n'écoute que sur `127.0.0.1` (jeton à usage uni
 - **Tableau de bord** : vue d'ensemble de l'état, tâches prêtes à reprendre, tâches récentes, activité des 14 derniers jours et répartition par outil/dossier
 - **Liste des tâches** : les chaînes de relais entre outils deviennent une seule tâche ; regroupées par dossier et triées par activité récente, avec état en temps réel
 - **Détail de tâche** : rail de relais vertical + aperçu de la passation + copie du prompt de passation en un clic
+- **Organisation** : organisation des préférences multi-outils ; cartes séparées pour les préférences appliquées et les conflits en attente, annulable
+- **Réglages** : interfaces et interrupteurs pour les résumés, l'organisation et la recherche sémantique, l'intégration automatique des nouveaux outils et l'état d'exécution
 - **Trois skins** : minimal / bande dessinée / pixel × clair / sombre / système ; le thème et la langue sont mémorisés
 - **11 langues d'interface** : chinois simplifié / English / chinois traditionnel / 日本語 / 한국어 / Español / Français / Deutsch / فارسی / português (BR) / bahasa indonésien
 - **Navigation et recherche de sessions** : recherche plein texte (CJK incluse), saut vers la correspondance surlignée
@@ -163,18 +165,18 @@ La recherche sémantique, les résumés de session et l'organisation des préfé
 
 - **Recherche sémantique** : ajoute un canal sémantique, si bien que chercher « page de connexion » trouve aussi les sessions qui disent « auth page ». Seul le texte user/assistant est embarqué, et seuls les `/embeddings` distants compatibles OpenAI sont pris en charge. Ordre de grandeur : ~250 sessions ≈ 2 M de caractères ≈ 0,03 USD. Le contenu inchangé est ignoré via une réconciliation par hash ; en cas de changement de modèle/hôte, une reconstruction en un clic est proposée. [Conception](docs/vector-search.md)
 - **Résumés de session** : produit un résumé de progression de 2–4 phrases par session, affiché dans la sortie du relais (`## 任务摘要（AI 生成）`), la liste et le détail des tâches, et la navigation des sessions. La matière se limite au titre, aux signaux d'état et aux ~20 derniers messages de la fin de session (≤8 Ko) ; le raisonnement et les sorties d'outils ne sont pas envoyés. ~1 M de tokens pour 250 sessions. La matière inchangée est ignorée ; en cas de changement de modèle/hôte, une reconstruction en un clic est proposée. [Conception](docs/llm-summary.md)
-- **Organisation des préférences** : importe en lecture seule la mémoire/règles globales de chaque outil, fusionne les doublons et contradictions, puis réécrit un bloc marqueur MemRelay. Elle ne touche qu'aux blocs marqueurs, sauvegarde avant écriture, est annulable et affiche les conflits au lieu de les trancher automatiquement ; les changements de sources sont vérifiés automatiquement pendant que `memrelay ui` tourne. [Conception](docs/tidy.md)
+- **Organisation des préférences** : importe en lecture seule la mémoire/règles globales de chaque outil, fusionne les doublons et contradictions, puis réécrit un bloc marqueur MemRelay. Elle ne touche qu'aux blocs marqueurs ou fichiers dédiés, sauvegarde avant écriture, est annulable et affiche les conflits au lieu de les trancher automatiquement ; les changements de sources sont vérifiés automatiquement pendant que `memrelay ui` tourne. [Conception](docs/tidy.md)
 
 Maintenance : `memrelay embed` / `memrelay summarize` / `memrelay tidy` pour un remplissage complet (interruptible et reprenable) ; `memrelay ui` remplit/vérifie en arrière-plan pendant son exécution.
 
 ## Confidentialité et sécurité
 
 - Les données ne vivent que dans `~/.memrelay/` sur votre machine ; aucune télémétrie ; aucun service cloud par défaut.
-- Les fichiers des autres outils sont en lecture seule ; les écritures se limitent aux configurations de skills/hooks et à `~/.memrelay/`, toutes consignées dans un manifeste et annulables.
+- Les sessions des autres outils sont en lecture seule ; les écritures se limitent aux intégrations que vous approuvez (skills, configuration des hooks / plugins), aux blocs marqués MemRelay ou fichiers dédiés écrits par l'organisation des préférences et à `~/.memrelay/`, toutes consignées dans un manifeste et annulables.
 - Les clés (clés API, jetons, clés privées, chaînes de connexion) sont détectées et masquées avant l'indexation et l'affichage.
 - Si vous activez la recherche sémantique, les résumés de session ou l'organisation des préférences, les textes/mémoires concernés (clés expurgées) sont envoyés aux hôtes que vous configurez (chaque fonction a son propre endpoint) ; les trois sont désactivés par défaut.
 - Le serveur de l'interface n'écoute que sur `127.0.0.1`, exige un jeton d'accès et valide l'en-tête Host ; les requêtes d'écriture rejettent en plus les origines croisées.
-- Les hooks de l'IDE Trae s'exécutent dans son bac à sable et ne peuvent déposer les événements bruts que dans `hooks_env` de Trae ; les clés courantes (`sk-`, jetons GitHub, clés AWS, champs `password/token`) sont masquées d'abord dans le bac à sable, mais le contenu hors de ces règles peut rester dans cette copie. Annuler l'intégration supprime ces fichiers. Si cela vous gêne, activez seulement le Skill Trae et non l'indexation en temps réel.
+- Les hooks de l'IDE Trae CN s'exécutent dans son bac à sable et ne peuvent déposer les événements bruts que dans `hooks_env` de Trae ; les clés courantes (`sk-`, jetons GitHub, clés AWS, champs `password/token`) sont masquées d'abord dans le bac à sable, mais le contenu hors de ces règles peut rester dans cette copie. Annuler l'intégration supprime ces fichiers. Si cela vous gêne, activez seulement le Skill Trae CN et non l'indexation en temps réel.
 
 ## Développement
 

@@ -59,9 +59,9 @@ MemRelay 直接讀取各工具留在本機的工作階段記錄，在你說「�
 - **舊 agent 零配合** — 不要求舊工具做任何事；續接時直接讀它留在本機的工作階段記錄，現場提煉進度、待辦與下一步。
 - **一次接入，照常說話** — `memrelay setup` 之後不用特別提 memrelay；在帶 Skill 或啟動提示的工具裡，說「繼續完成 XX 任務」就會自動觸發。
 - **進度自動跟上** — 經你同意後裝在工具的 hooks 裡，工作進度即時寫入本機索引，切到別的立即就能接上。
-- **主流工具全覆蓋** — Claude Code、Qoder、Codex、Cursor、CodeBuddy、WorkBuddy、OpenCode、ZCode、Trae、DeepSeek Harness 的工作階段都能讀（Trae、CodeBuddy 支援 CLI 與 IDE 兩種格式）。
+- **主流工具全覆蓋** — Claude Code、Qoder、Codex、Cursor、CodeBuddy、WorkBuddy、OpenCode、ZCode、Trae / Trae CN、DeepSeek Harness 的工作階段都能讀（Trae CN、CodeBuddy 支援 CLI 與 IDE 兩種格式）。
 - **不依賴大型語言模型** — 續接內容依規則在本機提煉，預設不連網、不需要 API Key；向量語意搜尋、工作階段摘要與偏好整理都是可選的 opt-in 增強（見下）。
-- **本機優先，可復原** — 資料只存在本機 `~/.memrelay/`，不做遙測；對其他工具唯讀，所有寫入都有清單、可一鍵復原。
+- **本機優先，可復原** — 資料只存在本機 `~/.memrelay/`，不做遙測；對其他工具的工作階段唯讀，接入與偏好下發的寫入都有清單、可一鍵復原。
 
 ## 安裝
 
@@ -126,7 +126,7 @@ Agent 在工作階段裡自動執行（唯讀、只列印）：
 | WorkBuddy | `~/.workbuddy/projects/…/*.jsonl` + `workbuddy.db` 中繼資料 |
 | OpenCode | `~/.local/share/opencode/opencode.db` |
 | ZCode | `~/.zcode/cli/db/db.sqlite` |
-| Trae / Trae CN | CLI 是 Codex 相容格式；IDE 工作階段庫加密，由 hook 事件即時重建 |
+| Trae / Trae CN | Trae CLI 是 Codex 相容格式；Trae CN IDE 工作階段庫加密，由 hook 事件即時重建（國際版 Trae 僅支援 CLI） |
 | DeepSeek Harness | `~/.dsh/sessions/<encoded-project-dir>/session-<id>/session.v4.jsonl.zstd`（多幀 zstd，唯讀） |
 
 > [!NOTE]
@@ -137,7 +137,7 @@ Agent 在工作階段裡自動執行（唯讀、只列印）：
 ## 已知邊界
 
 - **自動觸發依賴 Skill 或啟動提示**：OpenCode 目前只有即時索引外掛，不會在工作階段開始自動提示，需要手動執行 `memrelay resume`。
-- **Trae IDE 的工作階段庫加密**：只有開啟即時索引後才會用 hook 事件重建工作階段；只啟用 Skill、不啟用即時索引時，讀不到它的歷史工作階段。
+- **Trae CN IDE 的工作階段庫加密**：只有開啟即時索引後才會用 hook 事件重建工作階段；只啟用 Skill、不啟用即時索引時，讀不到它的歷史工作階段。
 - **只處理本機工作階段**：不做跨機同步；未支援的工具，或加密且沒有事件流的工作階段，無法讀取。
 
 ## 管理介面
@@ -151,6 +151,8 @@ memrelay ui
 - **儀表板**：狀態總覽、待接力任務、最近任務、近 14 天活動與工具/目錄分布
 - **任務列表**：跨工具的接力鏈合成一個任務，按目錄分組、最近活動排序，狀態即時更新
 - **任務詳情**：縱向接力軌 + 續接預覽 + 一鍵複製續接提示詞
+- **整理**：跨工具偏好整理；已下發與待拍板分卡顯示，可撤銷
+- **設定**：工作階段摘要、偏好整理、語意檢索的介面與開關，自動接入新工具，以及執行狀態
 - **三套面板外觀**：簡潔 / 漫畫 / 像素 × 淺色 / 深色 / 跟隨系統，主題與語言選擇會記住
 - **11 種介面語言**：簡體中文 / English / 繁體中文 / 日本語 / 한국어 / Español / Français / Deutsch / فارسی / Português (BR) / Bahasa Indonesia
 - **工作階段瀏覽與搜尋**：全文檢索（中文可搜），從命中處醒目提示跳入
@@ -162,18 +164,18 @@ memrelay ui
 
 - **語意檢索**：多一條語意通道，搜「登入頁」也能命中寫 "auth page" 的工作階段；只嵌 user/assistant 正文，只接 OpenAI 相容的遠端 `/embeddings`，參考量級約 250 個工作階段 ≈ 200 萬字元 ≈ $0.03。未變化的內容用雜湊對帳跳過，換模型/主機可一鍵重建向量。[設計](docs/vector-search.md)
 - **工作階段摘要**：為每個工作階段產生 2~4 句進度摘要，顯示在接力輸出（`## 任务摘要（AI 生成）`）、任務列表與詳情、工作階段瀏覽；素材只取標題、狀態信號和工作階段尾部約 20 則正文（≤8KB），思考與工具輸出不傳送，250 個工作階段全量約 100 萬 token。素材未變則跳過，換模型/主機可一鍵重建摘要。[設計](docs/llm-summary.md)
-- **偏好整理**：唯讀匯入各工具的全域記憶/規則，合併重複與矛盾後寫回 MemRelay 標記區塊；只寫標記區塊、寫前備份、可復原，衝突不自動裁決；`memrelay ui` 執行期間自動檢查來源變化。[設計](docs/tidy.md)
+- **偏好整理**：唯讀匯入各工具的全域記憶/規則，合併重複與矛盾後寫回 MemRelay 標記區塊；只寫標記區塊或專屬檔案、寫前備份、可復原，衝突不自動裁決；`memrelay ui` 執行期間自動檢查來源變化。[設計](docs/tidy.md)
 
 維護：`memrelay embed` / `memrelay summarize` / `memrelay tidy` 可全量補齊（可中斷續跑）；`memrelay ui` 執行期間背景自動補。
 
 ## 隱私與安全
 
 - 資料只存在本機的 `~/.memrelay/`，不做遙測；預設不依賴任何雲端服務。
-- 對其他工具的本機檔案唯讀；寫入僅限 Skill / hooks 設定與 `~/.memrelay/`，且都有清單可復原。
+- 對其他工具的工作階段唯讀；寫入僅限經你確認的接入（Skill、hooks / 外掛設定）、偏好整理下發的 MemRelay 標記區塊或專屬檔案與 `~/.memrelay/`，且都有清單可復原。
 - 入庫與輸出前都做金鑰偵測與遮蔽（API Key、權杖、私鑰、連線字串等）。
 - 語意檢索、工作階段摘要與偏好整理開啟後，相關正文/記憶（已做金鑰遮蔽）會傳送到你在設定裡指定的介面主機（三者各自獨立的介面）；預設關。
 - 介面服務只監聽 `127.0.0.1`，帶存取權杖並校驗 Host 標頭；寫入請求另外拒絕跨來源 Origin。
-- Trae IDE 的 hook 執行在它自己的沙箱裡，只能把原始事件先寫到 Trae 的 `hooks_env`；常見金鑰（`sk-`、GitHub token、AWS key、`password/token` 欄位）會在沙箱內先遮蔽，但規則未覆蓋的內容仍可能留在該副本裡，復原接入時會刪除這些檔案。介意這一點的環境可以只啟用 Trae 的 Skill、不啟用即時索引。
+- Trae CN IDE 的 hook 執行在它自己的沙箱裡，只能把原始事件先寫到 Trae 的 `hooks_env`；常見金鑰（`sk-`、GitHub token、AWS key、`password/token` 欄位）會在沙箱內先遮蔽，但規則未覆蓋的內容仍可能留在該副本裡，復原接入時會刪除這些檔案。介意這一點的環境可以只啟用 Trae CN 的 Skill、不啟用即時索引。
 
 ## 開發
 

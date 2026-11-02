@@ -60,9 +60,9 @@ MemRelay reads the session logs each tool keeps on your machine, and distills th
 - **Zero cooperation from the old agent** — no handoff document required; MemRelay reads its local session log directly and distills progress, todos and next steps.
 - **Set up once, then just talk** — after `memrelay setup` you never need to mention memrelay; in tools with a Skill or session-start hint, "continue the XX task" triggers it automatically.
 - **Progress keeps up** — with your consent it installs into your tools' hook systems, so progress lands in the local index in near real time and the next tool can pick up immediately.
-- **Mainstream tools covered** — reads sessions from Claude Code, Qoder, Codex, Cursor, CodeBuddy, WorkBuddy, OpenCode, ZCode, Trae and DeepSeek Harness (Trae and CodeBuddy in both CLI and IDE formats).
+- **Mainstream tools covered** — reads sessions from Claude Code, Qoder, Codex, Cursor, CodeBuddy, WorkBuddy, OpenCode, ZCode, Trae / Trae CN and DeepSeek Harness (Trae CN and CodeBuddy in both CLI and IDE formats).
 - **No LLM required** — handoff content is distilled locally by rules; offline by default, no API key needed; semantic vector search, session summaries and preference tidy are optional opt-in enhancements (see below).
-- **Local-first and undoable** — data stays in `~/.memrelay/`, no telemetry; other tools are read-only, and every write is tracked in a manifest and can be undone.
+- **Local-first and undoable** — data stays in `~/.memrelay/`, no telemetry; other tools' sessions are read-only, and every integration or preference-sync write is tracked in a manifest and can be undone.
 
 ## Installation
 
@@ -127,7 +127,7 @@ Sessions are read directly — no cooperation from the source tool required:
 | WorkBuddy | `~/.workbuddy/projects/…/*.jsonl` + `workbuddy.db` metadata |
 | OpenCode | `~/.local/share/opencode/opencode.db` |
 | ZCode | `~/.zcode/cli/db/db.sqlite` |
-| Trae / Trae CN | CLI uses a Codex-compatible format; the IDE's session store is encrypted and reconstructed from hook events |
+| Trae / Trae CN | The Trae CLI uses a Codex-compatible format; the Trae CN IDE's session store is encrypted and reconstructed from hook events (international Trae: CLI only) |
 | DeepSeek Harness | `~/.dsh/sessions/<encoded-project-dir>/session-<id>/session.v4.jsonl.zstd` (multi-frame zstd, read-only) |
 
 > [!NOTE]
@@ -138,7 +138,7 @@ Integration has two layers, all tracked and undoable: **Skill** (teaches a tool 
 ## Known Limitations
 
 - **Auto-trigger relies on a Skill or session-start hint**: OpenCode currently has only the real-time indexing plugin, with no session-start hint, so run `memrelay resume` manually there.
-- **Trae IDE's session store is encrypted**: it is only reconstructed from hook events when real-time indexing is enabled; with just the Skill and no real-time indexing, its past sessions cannot be read.
+- **Trae CN IDE's session store is encrypted**: it is only reconstructed from hook events when real-time indexing is enabled; with just the Skill and no real-time indexing, its past sessions cannot be read.
 - **Local sessions only**: no cross-machine sync; unsupported tools, or encrypted sessions without an event stream, cannot be read.
 
 ## Web UI
@@ -152,6 +152,8 @@ Serves a local UI bound to `127.0.0.1` only (one-time token; data never leaves y
 - **Dashboard**: status overview, tasks ready to resume, recent tasks, 14-day activity and tool/folder distribution
 - **Task list**: relay chains across tools become a single task; grouped by folder and sorted by recent activity, with live status
 - **Task detail**: vertical relay rail + handoff preview + one-click copy of the handoff prompt
+- **Tidy**: cross-tool preference cleanup; applied preferences and pending conflicts in separate cards, undoable
+- **Settings**: interfaces and switches for summaries, tidy, and semantic search, auto-integration for new tools, and runtime status
 - **Three skins**: minimal / comic / pixel × light / dark / system; theme and language choices are remembered
 - **11 UI languages**: Simplified Chinese / English / Traditional Chinese / Japanese / Korean / Spanish / French / German / Persian / Portuguese (BR) / Indonesian
 - **Session browsing & search**: full-text search (CJK included), jump to matches with highlighting
@@ -163,18 +165,18 @@ Semantic search, session summaries and preference tidy are off by default. Each 
 
 - **Semantic search**: adds a semantic channel, so searching "login page" also finds sessions that say "auth page". Only user/assistant text is embedded, and only OpenAI-compatible remote `/embeddings` is supported. Scale reference: ~250 sessions ≈ 2M chars ≈ $0.03. Unchanged content is skipped via hash reconciliation; switching models/hosts offers a one-click rebuild. [Design](docs/vector-search.md)
 - **Session summaries**: writes a 2–4 sentence progress summary per session, shown in resume output (`## 任务摘要（AI 生成）`), the task list & detail, and conversation browsing. Material is limited to the title, status signals and the last ~20 messages of the session tail (≤8KB); reasoning and tool output are not sent. ~1M tokens for 250 sessions. Unchanged material is skipped; switching models/hosts offers a one-click rebuild. [Design](docs/llm-summary.md)
-- **Preference tidy**: imports each tool's global memory/rules read-only, merges duplicates and conflicts, then writes a MemRelay marker block back. It only touches marker blocks, backs up before writing, is undoable, and surfaces conflicts instead of auto-resolving them; source changes are checked automatically while `memrelay ui` runs. [Design](docs/tidy.md)
+- **Preference tidy**: imports each tool's global memory/rules read-only, merges duplicates and conflicts, then writes a MemRelay marker block back. It only touches marker blocks or dedicated files, backs up before writing, is undoable, and surfaces conflicts instead of auto-resolving them; source changes are checked automatically while `memrelay ui` runs. [Design](docs/tidy.md)
 
 Maintenance: `memrelay embed` / `memrelay summarize` / `memrelay tidy` for a full backfill (interruptible and resumable); `memrelay ui` fills/checks in the background while running.
 
 ## Privacy & Security
 
 - Data lives only in `~/.memrelay/` on your machine; no telemetry; no cloud services by default.
-- Other tools' files are read-only; writes are limited to skill/hook configs and `~/.memrelay/`, all tracked in a manifest and undoable.
+- Other tools' sessions are read-only; writes are limited to the integrations you approve (Skills, hooks / plugin config), the MemRelay marker blocks or dedicated files written by preference sync, and `~/.memrelay/`, all tracked in a manifest and undoable.
 - Secrets (API keys, tokens, private keys, connection strings) are detected and redacted before indexing and output.
 - When semantic search, session summaries, or preference tidy are enabled, related text/memory (secrets redacted) is sent to the hosts you configure (each feature has its own endpoint); all three are off by default.
 - The UI server binds to `127.0.0.1` only, requires an access token and validates the Host header; write requests also reject cross-origin Origins.
-- Trae IDE hooks run inside Trae's own sandbox and can only stage raw events under Trae's `hooks_env`; common secrets (`sk-`, GitHub tokens, AWS keys, `password/token` fields) are masked inside the sandbox first, but content outside those rules may remain in that copy. Undoing the integration removes those files. If that matters, enable only the Trae Skill and skip real-time indexing.
+- Trae CN IDE hooks run inside Trae's own sandbox and can only stage raw events under Trae's `hooks_env`; common secrets (`sk-`, GitHub tokens, AWS keys, `password/token` fields) are masked inside the sandbox first, but content outside those rules may remain in that copy. Undoing the integration removes those files. If that matters, enable only the Trae CN Skill and skip real-time indexing.
 
 ## Development
 
