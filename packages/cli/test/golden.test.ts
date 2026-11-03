@@ -251,7 +251,7 @@ describe.skipIf(!hasBuild)("golden：resume 端到端（伪造 HOME 与项目）
     const temp = makeTempHome();
     cleanups.push(temp.cleanup);
     const ping = runCli(["ping"], { cwd: process.cwd(), home: temp.home });
-    expect(ping.stdout.trim()).toBe("MEMRELAY-OK 0.1.0");
+    expect(ping.stdout.trim()).toBe("MEMRELAY-OK 1.0.0");
     const help = runCli([], { cwd: process.cwd(), home: temp.home });
     expect(help.stdout).toContain("memrelay resume");
     expect(help.stdout).toContain("memrelay setup");

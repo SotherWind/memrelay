@@ -141,7 +141,7 @@ CREATE TABLE IF NOT EXISTS summary_queue (
 | `store/embeddings-store.ts` | 迁移到公共原语（行为不变、测试保证） |
 | `core/llm.ts`（新） | OpenAI 兼容 `/chat/completions` 客户端（超时、429 退避、失败即抛） |
 | `store/summaries-store.ts`（新） | 表读写、入队、drain（照搬同款模式）、状态 / 清除 / 重建、素材组装与脱敏、按会话取数 |
-| `store/schema.ts` | schema v1：summaries + summary_queue（开发期曾按 v5 记录，0.1.0 统一并入 v1） |
+| `store/schema.ts` | schema v1：summaries + summary_queue（开发期曾按 v5 记录，1.0.0 统一并入 v1） |
 | `store/indexer.ts` | 会话索引完成 → 入队 |
 | `resume/command.ts` + `resume/render.ts` | 定向生成（选定后 ≤1 会话 / ≤6s）+ `## 任务摘要（AI 生成）` 段 |
 | `resume/menu.ts` | 候选项摘要行（传入 map） |
@@ -177,7 +177,7 @@ TDD 要点：`core/llm.ts` 伪 fetch 注入（离线可测）；素材组装 / �
 
 ## 15. 修订：接口按功能独立 + 有界并发（2026-10-23）
 
-**拍板**：删除共享的「模型服务」分组；语义检索与会话摘要各自维护 `baseUrl / model / apiKey`，可指向不同上游、互不抢配额。**迁移**：0.1.0 首个对外版本的 schema 为 **v1**（开发期 v1-v6 的结构已压缩为一次建库）；开发期共享的 `model.*` 配置已迁入摘要/语义检索并删除，发布后不再保留兼容分支。迁移后指纹 `model@host` 不变，已生成的摘要与向量继续有效，不会触发重建。
+**拍板**：删除共享的「模型服务」分组；语义检索与会话摘要各自维护 `baseUrl / model / apiKey`，可指向不同上游、互不抢配额。**迁移**：1.0.0 首个对外版本的 schema 为 **v1**（开发期 v1-v6 的结构已压缩为一次建库）；开发期共享的 `model.*` 配置已迁入摘要/语义检索并删除，发布后不再保留兼容分支。迁移后指纹 `model@host` 不变，已生成的摘要与向量继续有效，不会触发重建。
 
 **实现**：
 - 配置键：`summary.*` 三字段归摘要；`embed.*` 三字段归语义检索且不再继承；`model.*` 不再读取。任务命名与查询侧定向生成跟随摘要配置。

@@ -618,7 +618,7 @@ describe("删除、隐私与设置", () => {
     fs.writeFileSync(
       path.join(temp.home, ".memrelay", "integrations.json"),
       JSON.stringify({
-        version: "0.1.0",
+        version: "1.0.0",
         writtenAt: "",
         files: [
           { path: path.join(temp.home, ".zcode", "cli", "config.json"), hash: "", kind: "hook", tool: "zcode" },
@@ -668,7 +668,7 @@ describe("删除、隐私与设置", () => {
       fs.writeFileSync(skillFile, "# memrelay\n");
       fs.writeFileSync(
         path.join(temp.home, ".memrelay", "integrations.json"),
-        JSON.stringify({ version: "0.1.0", writtenAt: "", files: [{ path: skillFile, hash: "", kind: "skill" }] }),
+        JSON.stringify({ version: "1.0.0", writtenAt: "", files: [{ path: skillFile, hash: "", kind: "skill" }] }),
       );
       expect(maybeAutoIntegrateHint(db, temp.env)).toBeUndefined();
 

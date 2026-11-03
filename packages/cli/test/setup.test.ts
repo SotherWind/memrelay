@@ -348,7 +348,7 @@ describe.skipIf(!hasBuild)("setup 接入", () => {
 describe("Skill 模板与启动脚本（纯函数）", () => {
   it("Skill 里按终端分别给出命令", () => {
     const tpl = renderSkill({
-      version: "0.1.0",
+      version: "1.0.0",
       bashCmd: "'/c/Users/dev/.memrelay/bin/memrelay'",
       powershellCmd: '& "$env:USERPROFILE\\.memrelay\\bin\\memrelay.cmd"',
       cmdCmd: '"%USERPROFILE%\\.memrelay\\bin\\memrelay.cmd"',

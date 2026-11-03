@@ -1,6 +1,6 @@
 {
   "name": "memrelay-dsh-plugin",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "MemRelay 的 DeepSeek Harness 进程内插件：回合结束时增量索引 dsh 会话（不经过沙箱通道）",
   "type": "module",
   "main": "lib/index.js",

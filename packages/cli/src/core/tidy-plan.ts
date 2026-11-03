@@ -15,7 +15,7 @@ export interface TidyResult {
   conflicts: TidyConflict[];
 }
 
-/** 提示词版本：与 0.1.0 的发布线一致，统一为 v1。 */
+/** 提示词版本：与 1.0.0 的发布线一致，统一为 v1。 */
 export const TIDY_PROMPT_VERSION = 1;
 
 /** 单次整理的输入上限：避免把整个记忆库一次性塞给模型。 */

@@ -1,5 +1,5 @@
 /**
- * 0.1.0 是首个对外版本：所有结构（含偏好整理）都在 v1。
+ * 1.0.0 是首个对外版本：所有结构（含偏好整理）都在 v1。
  * 未发版期间给 v1 增表时直接并入下方 SQL，启动时用 IF NOT EXISTS 幂等补齐；
  * 发版后再改结构需追加 MIGRATIONS 并递增 SCHEMA_VERSION。
  */
@@ -7,7 +7,7 @@ export const SCHEMA_VERSION = 1;
 
 /** 每个迁移按顺序执行；数组下标 + 1 = user_version。 */
 export const MIGRATIONS: string[] = [
-  // v1：0.1.0 首个正式版完整结构（原开发期 v1-v6 压缩）。
+  // v1：1.0.0 首个正式版完整结构（原开发期 v1-v6 压缩）。
   `
   CREATE TABLE IF NOT EXISTS sources (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
